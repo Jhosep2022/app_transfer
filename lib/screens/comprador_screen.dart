@@ -85,7 +85,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
         ClipPath(
           clipper: InvertedHeaderClipper(),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.22,
+            height: MediaQuery.of(context).size.height * 0.23,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: Colors.teal,
@@ -130,7 +130,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
       child: DropdownButtonFormField<String>(
         value: _selectedRegion,
         hint: Text(
-          'Pulsa y Elige región donde estás ahora',
+          'Pulsa y Elige región donde estás',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         items: regiones.map((String region) {

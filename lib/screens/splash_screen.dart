@@ -3,6 +3,8 @@ import 'package:lottie/lottie.dart';
 import 'home_screen.dart';
 import 'dart:async';
 
+import 'ubicacion_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -14,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => UbicacionScreen()),
       );
     });
   }

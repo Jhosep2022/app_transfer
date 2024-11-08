@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
                 ClipPath(
                   clipper: InvertedHeaderClipper(),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.22,
+                    height: MediaQuery.of(context).size.height * 0.23,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.teal,
