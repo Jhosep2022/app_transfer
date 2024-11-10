@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/revision_tecnica_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InstitucionesEstadoScreen extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class InstitucionesEstadoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Cabecera curvada directamente en el build
+            // Cabecera curvada
             Stack(
               children: [
                 ClipPath(
@@ -56,15 +57,25 @@ class InstitucionesEstadoScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  _buildConsultaButton('CONSULTA AVALUO FISCAL EN SII', 'https://www.sii.cl'),
+                  _buildConsultaButton(
+                      'CONSULTA AVALUO FISCAL EN SII',
+                      'https://www4.sii.cl/vehiculospubui/#/searchtasacion'),
                   SizedBox(height: 10),
-                  _buildConsultaButton('CONSULTA MULTAS PPU EN REGISTRO CIVIL', 'https://www.registrocivil.cl'),
+                  _buildConsultaButton(
+                      'CONSULTA MULTAS PPU EN REGISTRO CIVIL',
+                      'https://consultamultas.srcei.cl/ConsultaMultas/consultaMultasExterna.do'),
                   SizedBox(height: 10),
-                  _buildConsultaButton('VALIDA PADRÓN EN REGISTRO CIVIL', 'https://www.registrocivil.cl'),
+                  _buildConsultaButton(
+                      'VALIDA PADRÓN EN REGISTRO CIVIL',
+                      'https://www.registrocivil.cl/OficinaInternet/verificacion/verificacioncertificado.srcei'),
                   SizedBox(height: 10),
-                  _buildConsultaButton('BUSCA PPU EN FISCALÍA', 'https://www.fiscalia.cl'),
+                  _buildConsultaButton(
+                      'BUSCA PPU EN FISCALÍA',
+                      'http://www.fiscaliadechile.cl/Fiscalia/victimas/buscador.jsp'),
                   SizedBox(height: 10),
-                  _buildConsultaButton('PPU ENCARGO POR ROBO: AUTO SEGURO PDI', 'https://www.pdi.cl'),
+                  _buildConsultaButton(
+                      'PPU ENCARGO POR ROBO: AUTO SEGURO PDI',
+                      'https://www.autoseguro.gob.cl/'),
                   SizedBox(height: 10),
                   _buildUltimaConsultaButton(context),
                   SizedBox(height: 30),
@@ -102,9 +113,7 @@ class InstitucionesEstadoScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {
-          _launchURL(url); // Simulación de la apertura del enlace
-        },
+        onPressed: () => _launchURL(url),
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
@@ -160,8 +169,13 @@ class InstitucionesEstadoScreen extends StatelessWidget {
     );
   }
 
-  // Método para abrir el enlace en el navegador (simulación)
-  void _launchURL(String url) {
-    print("Lanzar URL: $url"); // Simulación, puedes implementar url_launcher aquí
+  // Método para abrir el enlace en el navegador
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      print('No se pudo abrir el enlace $url');
+    }
   }
 }

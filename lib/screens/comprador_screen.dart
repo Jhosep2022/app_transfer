@@ -239,15 +239,38 @@ class _CompradorScreenState extends State<CompradorScreen> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Tipo: $tipo', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text('Año: $anio', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text('Marca: $marca', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 10),
-            Text('Modelo: $modelo', style: TextStyle(fontSize: 16)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Tipo:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(tipo, style: TextStyle(fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Año:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(anio, style: TextStyle(fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Marca:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(marca, style: TextStyle(fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Modelo:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(modelo, style: TextStyle(fontSize: 16)),
+              ],
+            ),
           ],
         ),
       ),

@@ -100,15 +100,13 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                             // Redirige a PlacaDenegadaScreen si tiene menos de 6 dígitos
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlacaDenegadaScreen()),
+                              MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
                             );
                           } else {
                             // Redirige a ImpuestoMunicipalScreen si tiene exactamente 6 dígitos
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => ImpuestoMunicipalScreen()),
+                              MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),
                             );
                           }
                         },
@@ -166,16 +164,41 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         ),
                       ),
                     ),
+                  SizedBox(height: 20),
+
+                  // Subtítulo en rojo para el primer grupo de preguntas
+                  Text(
+                    'ADMINISTRACION ESTADO PLACA PATENTE UNICA',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   Divider(thickness: 2, color: Colors.grey[300]),
                   SizedBox(height: 20),
+
                   _buildRadioGroup('¿Vende?'),
                   _buildRadioGroup('¿Robado?'),
                   _buildRadioGroup('¿Pérdida Total?'),
+
+                  // Subtítulo en rojo para el segundo grupo de preguntas
+                  SizedBox(height: 20),
+                  Text(
+                    'AUTORIZO LA OBTENCIÓN',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   Divider(thickness: 2, color: Colors.grey[300]),
                   SizedBox(height: 20),
+
                   _buildRadioGroup('¿R. Técnica?'),
                   _buildRadioGroup('¿P. Circulación?'),
                   SizedBox(height: 20),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

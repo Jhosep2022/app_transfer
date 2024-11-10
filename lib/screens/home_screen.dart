@@ -3,7 +3,9 @@ import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/clave_screen.dart';
 import 'package:transfer_app/screens/comprador_screen.dart';
 import 'package:transfer_app/screens/instituciones_estado_screen.dart';
-import 'package:transfer_app/screens/verificar_ppu_screen.dart'; // Importa tu pantalla de InstitucionesEstadoScreen
+import 'package:transfer_app/screens/verificar_ppu_screen.dart';
+
+import 'mi_ubicacion_home_screen.dart'; // Importa tu pantalla de InstitucionesEstadoScreen
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -140,6 +142,13 @@ class HomeScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CompradorScreen()),
+          );
+        }
+        if (title == 'Mi ubicacion') {
+          // Navegar a CompradorScreen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MiUbicacionHomeScreen()),
           );
         }
         // Puedes agregar más pantallas según el título

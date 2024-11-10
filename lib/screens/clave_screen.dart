@@ -66,37 +66,41 @@ class ClaveScreen extends StatelessWidget {
                   SizedBox(height: 20),
 
                   // Uso del paquete pin_code_fields para ingresar la clave
-                  PinCodeTextField(
-                    appContext: context,
-                    length: 4, 
-                    obscureText: true, 
-                    animationType: AnimationType.fade,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      fieldHeight: 50,
-                      fieldWidth: 40,
-                      activeFillColor: Colors.white,
-                      selectedFillColor: Colors.teal.shade100,
-                      inactiveFillColor: Colors.white, 
-                      activeColor: Colors.teal,
-                      inactiveColor: Colors.teal, 
-                      selectedColor: Colors.teal, 
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 80.0), 
+                    child: PinCodeTextField(
+                      appContext: context,
+                      length: 4,
+                      obscureText: true,
+                      animationType: AnimationType.fade,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(5),
+                        fieldHeight: 50,
+                        fieldWidth: 40,
+                        activeFillColor: Colors.white,
+                        selectedFillColor: Colors.teal.shade100,
+                        inactiveFillColor: Colors.white,
+                        activeColor: Colors.teal,
+                        inactiveColor: Colors.teal,
+                        selectedColor: Colors.teal,
+                      ),
+                      animationDuration: Duration(milliseconds: 300),
+                      backgroundColor: Colors.transparent,
+                      enableActiveFill: true,
+                      onCompleted: (v) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => PropietarioScreen()),
+                        );
+                      },
+                      onChanged: (value) {
+                        print(value);
+                      },
                     ),
-                    animationDuration: Duration(milliseconds: 300),
-                    backgroundColor: Colors.transparent,
-                    enableActiveFill: true,
-                    onCompleted: (v) {
-                      // Cuando se ingresen los 4 dígitos correctamente, redirige a la pantalla de propietario
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => PropietarioScreen()),
-                      );
-                    },
-                    onChanged: (value) {
-                      print(value); // Puedes hacer algo mientras se ingresa la clave
-                    },
                   ),
+
+
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
