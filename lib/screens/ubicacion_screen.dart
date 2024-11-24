@@ -63,11 +63,13 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
     });
 
     // Espera de 2 segundos antes de redirigir
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
-      );
+    Future.delayed(const Duration(seconds: 4), () {
+      if (mounted && _isMapRendered) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
+        );
+      }
     });
   }
 

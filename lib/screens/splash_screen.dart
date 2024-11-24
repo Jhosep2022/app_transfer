@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'home_screen.dart';
 import 'dart:async';
-
 import 'ubicacion_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,31 +22,40 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/certivipx.png', height: 100),
-            SizedBox(height: 20),
-            Lottie.asset(
-              'assets/stationwagon.json',
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              fit: BoxFit.cover,
+    return ScreenUtilInit(
+      designSize: Size(360, 690),
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/certivipx.png',
+                  height: 100.h,
+                ),
+                SizedBox(height: 20.h),
+                Lottie.asset(
+                  'assets/stationwagon.json',
+                  width: 300.w,
+                  height: 200.h,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 20.h),
+                Text(
+                  'Transfiera su Placa Patente Única con Seguridad',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.teal,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            Text(
-              'Transfiera su Placa Patente Única con Seguridad',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.teal,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

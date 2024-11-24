@@ -41,6 +41,9 @@ dependencies:
   url_launcher: ^6.1.5
   flutter_map: ^7.0.2
   qr_code_scanner_plus: ^2.0.6
+  flutter_screenutil: ^5.9.3
+  shared_preferences: ^2.1.0
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
-import 'crear_clave_ingreso_screen.dart';
-import 'registro_usuario_screen.dart';
+import '../services/vehiculos_service.dart';
 
 class CedulaScannerScreen extends StatefulWidget {
   @override
@@ -12,6 +11,9 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   String qrText = "";
+  String resultMessage = "";
+
+  final VehiculosService _vehiculosService = VehiculosService();
 
   @override
   void reassemble() {
@@ -26,7 +28,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Escanear Cédula de Identidad'),
+        title: const Text('Escanear Cédula de Identidad'),
         backgroundColor: Colors.teal,
       ),
       body: Column(
@@ -45,19 +47,23 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
               children: [
                 Text(
                   'Código escaneado: $qrText',
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegistroUsuarioScreen(),
+                if (resultMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text(
+                      resultMessage,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: resultMessage.contains('RUT Verificado') ? Colors.green : Colors.red,
                       ),
-                    );
-                  },
-                  child: Text('Ir a Crear Clave', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 46, 168, 154))),
+                    ),
+                  ),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Volver'),
                 ),
               ],
             ),
@@ -70,10 +76,35 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
+      controller.pauseCamera(); // Pausar la cámara para evitar lecturas duplicadas
       setState(() {
         qrText = scanData.code!;
       });
+      _validateRut(qrText);
     });
+  }
+
+  Future<void> _validateRut(String rut) async {
+    try {
+      final result = await _vehiculosService.verificaRut(rut);
+      if (result != null) {
+        setState(() {
+          resultMessage = result['activo'] == 'true'
+              ? 'RUT Verificado: Activo'
+              : 'RUT No Activo';
+        });
+      } else {
+        setState(() {
+          resultMessage = 'RUT no encontrado.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        resultMessage = 'Error al verificar el RUT.';
+      });
+    } finally {
+      controller?.resumeCamera(); // Reanudar la cámara después del proceso
+    }
   }
 
   @override
