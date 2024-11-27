@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Cambiamos a flutter_secure_storage
 import '../services/vehiculos_service.dart';
+import 'crear_clave_ingreso_screen.dart';
 
 class ERutScannerScreen extends StatefulWidget {
   @override
@@ -64,7 +65,10 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> {
                     ),
                   ),
                 ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+                  ),
                   child: const Text('Volver'),
                 ),
               ],

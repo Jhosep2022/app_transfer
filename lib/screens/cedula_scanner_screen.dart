@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import '../services/vehiculos_service.dart';
+import 'crear_clave_ingreso_screen.dart';
 
 class CedulaScannerScreen extends StatefulWidget {
   @override
@@ -62,7 +63,10 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
                     ),
                   ),
                 ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+                  ),
                   child: const Text('Volver'),
                 ),
               ],
