@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
+import 'package:transfer_app/screens/registro_usuario_screen.dart';
 import 'package:transfer_app/screens/representante_legal_screen.dart';
 
 class SeleccionUbicacionScreen extends StatefulWidget {
@@ -153,7 +154,7 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RepresentanteLegalScreen()),
+                      builder: (context) => RegistroUsuarioScreen()),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(

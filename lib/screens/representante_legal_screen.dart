@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
-import 'package:transfer_app/screens/cedula_scanner_screen.dart'; // Importa la pantalla de escaneo QR
+import 'package:transfer_app/screens/cedula_scanner_screen.dart';
+
+import 'representante_scanner_screen.dart'; // Importa la pantalla de escaneo QR
 
 class RepresentanteLegalScreen extends StatelessWidget {
   @override
@@ -48,7 +50,7 @@ class RepresentanteLegalScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CedulaScannerScreen()),
+                MaterialPageRoute(builder: (context) => RepresentanteScannerScreen()),
               );
             },
             style: ElevatedButton.styleFrom(
