@@ -14,11 +14,24 @@ class VehiculosService {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         if (data.isNotEmpty) {
+          print("Vehículo encontrado en el registro civil xdxdxd. $data");
           return Vehiculo.fromJson(data[0]);
+        }else{
+          print("Vehículo no encontrado en el registro civil xdxdxd.");
         }
       }
     } catch (e) {
       print("Error al consultar el registro civil: $e");
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        if (data.isNotEmpty) {
+          print("Vehículo encontrado en el registro civil zzzz. $data");
+          return Vehiculo.fromJson(data[0]);
+        }else{
+          print("Vehículo no encontrado en el registro civil zzzz.");
+        }
+      }
     }
     return null;
   }

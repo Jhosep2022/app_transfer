@@ -30,11 +30,26 @@ class Vehiculo {
       marca: json['marcacivil'],
       modelo: json['modelocivil'],
       ano: json['anucivil'],
-      estadoVenta: json['sventa'],
-      estadoRobo: json['srobo'],
-      estadoPerdida: json['sperdida'],
-      estadoTecnica: json['stecnica'],
-      estadoPermiso: json['spermiso'],
+      estadoVenta: json['sventa'] ?? 'No',
+      estadoRobo: json['srobo'] ?? 'No',
+      estadoPerdida: json['sperdida'] ?? 'No',
+      estadoTecnica: json['stecnica'] ?? 'No',
+      estadoPermiso: json['spermiso'] ?? 'No',
     );
+  }
+    // Convertir un Vehiculo a JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'patentecivil': patente,
+      'tipocivil': tipo,
+      'marcacivil': marca,
+      'modelocivil': modelo,
+      'anucivil': ano,
+      //'sventa': estadoVenta,
+      //'srobo': estadoRobo,
+      //'sperdida': estadoPerdida,
+      //'stecnica': estadoTecnica,
+      //'spermiso': estadoPermiso,
+    };
   }
 }

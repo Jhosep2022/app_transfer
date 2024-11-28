@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/placa_denegada_screen.dart';
 import 'package:transfer_app/screens/impuesto_municipal_screen.dart';
+import 'package:transfer_app/services/vehiculos_service.dart';
 
 class PropietarioScreen extends StatefulWidget {
   @override
@@ -12,6 +13,17 @@ class PropietarioScreen extends StatefulWidget {
 class _PropietarioScreenState extends State<PropietarioScreen> {
   bool _isSearched = false; // Controla si se ha realizado la búsqueda
   TextEditingController _ppuController = TextEditingController();
+  final VehiculosService _vehiculosService = VehiculosService();
+
+  String? tipoAutomovil;
+  String? modeloAutomovil;
+  String? anoAutomovil;
+  String? marcaAutomovil;
+  String? vendeAutomovil;
+  String? robadoAutomovil;
+  String? perdidoAutomovil;
+  String? tecnicaAutomovil;
+  String? permisoAutomovil;
 
   @override
   Widget build(BuildContext context) {
@@ -103,16 +115,57 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                           ),
                           SizedBox(width: 10.w), // Espacio entre input y botón
                           ElevatedButton(
-                            onPressed: () {
-                              if (_ppuController.text.length < 6) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
+                            onPressed: () async {
+                              final vehiculosService = VehiculosService();
+                              final patente = _ppuController.text;
+
+                              if (patente.isEmpty || patente.length < 6) {
+                                // Mostrar un mensaje de error si la patente es inválida
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Por favor, ingresa una patente válida.')),
+                                );
+                                return;
+                              }
+
+                              // Llamar al servicio y obtener los datos del vehículo
+                              final vehiculo = await vehiculosService.consultarRegistroCivil(patente);
+                              
+                              if (vehiculo != null) {
+                                // Imprimir la respuesta en consola
+                                setState(() {
+                                  tipoAutomovil = vehiculo.tipo;
+                                  modeloAutomovil = vehiculo.modelo;
+                                  anoAutomovil = vehiculo.ano;
+                                  marcaAutomovil = vehiculo.marca;
+                                  vendeAutomovil = vehiculo.estadoVenta;
+                                  robadoAutomovil = vehiculo.estadoRobo;
+                                  perdidoAutomovil = vehiculo.estadoPerdida;
+                                  tecnicaAutomovil = vehiculo.estadoTecnica;
+                                  permisoAutomovil = vehiculo.estadoPermiso;
+                                });
+                                print('Vehículo encontrado: ${vehiculo.toJson()}');
+
+                                // Opcional: mostrar los datos en pantalla
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Vehículo encontrado')),
                                 );
                               } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),
+                                // Si no se encuentra el vehículo
+                                setState(() {
+                                  tipoAutomovil = "No encontrado";
+                                  modeloAutomovil = "Sin Modelo";
+                                  anoAutomovil = "Sin año";
+                                  marcaAutomovil = "Sin marca";
+                                  vendeAutomovil = "Sin información";
+                                  robadoAutomovil = "Sin información";
+                                  perdidoAutomovil = "Sin información";
+                                  tecnicaAutomovil = "Sin información";
+                                  permisoAutomovil = "Sin información";
+                                });
+                                print('No se encontró información para la patente ingresada.');
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('No se encontró información para la patente ingresada.')),
                                 );
                               }
                             },
@@ -135,6 +188,43 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         ],
                       ),
                       SizedBox(height: 20.h),
+                      // Subtítulo en rojo para el primer grupo de preguntas
+                      Text(
+                        'Tipo: ${tipoAutomovil ?? ''}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      // Subtítulo en rojo para el primer grupo de preguntas
+                      Text(
+                        'Año: ${anoAutomovil ?? ''}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      // Subtítulo en rojo para el primer grupo de preguntas
+                      Text(
+                        'Marca: ${marcaAutomovil ?? ''}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      // Subtítulo en rojo para el primer grupo de preguntas
+                      Text(
+                        'Modelo: ${modeloAutomovil ?? ''}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+
 
                       // Subtítulo en rojo para el primer grupo de preguntas
                       Text(
@@ -148,9 +238,9 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       Divider(thickness: 2.h, color: Colors.grey[300]),
                       SizedBox(height: 20.h),
 
-                      _buildRadioGroup('¿Vende?'),
-                      _buildRadioGroup('¿Robado?'),
-                      _buildRadioGroup('¿Pérdida Total?'),
+                      _buildRadioGroup('¿Vende? ${vendeAutomovil ?? ''}'),
+                      _buildRadioGroup('¿Robado? ${robadoAutomovil ?? ''}'),
+                      _buildRadioGroup('¿Pérdida Total? ${perdidoAutomovil ?? ''}'),
 
                       SizedBox(height: 20.h),
                       Text(
@@ -164,8 +254,8 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       Divider(thickness: 2.h, color: Colors.grey[300]),
                       SizedBox(height: 20.h),
 
-                      _buildRadioGroup('¿R. Técnica?'),
-                      _buildRadioGroup('¿P. Circulación?'),
+                      _buildRadioGroup('¿R. Técnica? ${tecnicaAutomovil ?? ''}'),
+                      _buildRadioGroup('¿P. Circulación? ${permisoAutomovil ?? ''}'),
                       SizedBox(height: 20.h),
 
                       Row(
