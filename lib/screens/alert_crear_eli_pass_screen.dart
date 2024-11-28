@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 
-import 'crear_clave_screen.dart';
+import 'crear_clave_eli_pass_screen.dart';
 
 class CrearEliPassScreen extends StatelessWidget {
   @override

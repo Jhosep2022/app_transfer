@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:transfer_app/screens/confirmar_correo_screen.dart';
+import 'crear_clave_eli_pass_screen.dart';
+import 'confirmar_correo_screen.dart';
 
 class RepiteClaveScreen extends StatelessWidget {
   @override
@@ -75,12 +76,36 @@ class RepiteClaveScreen extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 enableActiveFill: true,
                 onCompleted: (v) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ConfirmarCorreoScreen(email: "miguelfuicaj@gmail.com"),
-                    ),
-                  );
+                  print("Clave repetida en RepiteClaveScreen: $v"); // Depuración
+                  print(
+                      "Clave esperada en CrearClaveScreen: ${CrearClaveScreen.claveEliPassNotifier.value}"); // Depuración
+
+                  if (v == CrearClaveScreen.claveEliPassNotifier.value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ConfirmarCorreoScreen(email: "miguelfuicaj@gmail.com"),
+                      ),
+                    );
+                  } else {
+                    // Muestra un mensaje de error
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Error"),
+                        content: Text("Las claves no coinciden. Inténtalo de nuevo."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
                 onChanged: (value) {},
               ),

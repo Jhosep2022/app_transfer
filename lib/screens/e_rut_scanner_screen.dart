@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Cambiamos a flutter_secure_storage
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../services/vehiculos_service.dart';
 import 'crear_clave_ingreso_screen.dart';
 
@@ -9,21 +9,36 @@ class ERutScannerScreen extends StatefulWidget {
   _ERutScannerScreenState createState() => _ERutScannerScreenState();
 }
 
-class _ERutScannerScreenState extends State<ERutScannerScreen> {
+class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindingObserver {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   String qrText = "";
   String resultMessage = "";
 
   final VehiculosService _vehiculosService = VehiculosService();
-  final FlutterSecureStorage secureStorage = FlutterSecureStorage(); // Instancia para almacenamiento seguro
+  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
   @override
-  void reassemble() {
-    super.reassemble();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this); // Observador para el ciclo de vida
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); // Quitar el observador
+    controller?.dispose(); // Liberar recursos de la cámara
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
     if (controller != null) {
-      controller!.pauseCamera();
-      controller!.resumeCamera();
+      if (state == AppLifecycleState.paused) {
+        controller!.pauseCamera(); // Pausa la cámara si la app está en segundo plano
+      } else if (state == AppLifecycleState.resumed) {
+        controller!.resumeCamera(); // Reanuda la cámara si la app vuelve al primer plano
+      }
     }
   }
 
@@ -65,10 +80,13 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> {
                     ),
                   ),
                 ElevatedButton(
-                  onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
-                  ),
+                  onPressed: () {
+                    controller?.stopCamera(); // Detén la cámara antes de navegar
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+                    );
+                  },
                   child: const Text('Volver'),
                 ),
               ],
@@ -82,7 +100,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      controller.pauseCamera(); // Pausar para evitar lecturas duplicadas
+      controller.pauseCamera(); // Pausa la cámara para evitar lecturas duplicadas
       setState(() {
         qrText = scanData.code!;
       });
@@ -92,7 +110,6 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> {
 
   Future<void> _processQR(String qrData) async {
     try {
-      // Separar datos del QR (ejemplo: URL o JSON)
       final Uri parsedQR = Uri.parse(qrData);
       final String rut = parsedQR.queryParameters['rut'] ?? '';
       final String serie = parsedQR.queryParameters['serie'] ?? '';
@@ -105,7 +122,6 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> {
         return;
       }
 
-      // Verificar el RUT en el backend
       final result = await _vehiculosService.verificaRut(rut);
       if (result != null && result['activo'] == 'true') {
         await _saveToLocalStorage(rut, serie, result['verificado'] ?? '');
@@ -127,15 +143,8 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> {
   }
 
   Future<void> _saveToLocalStorage(String rut, String serie, String verificado) async {
-    // Guardar datos en almacenamiento seguro
     await secureStorage.write(key: 'rut', value: rut);
     await secureStorage.write(key: 'serie', value: serie);
     await secureStorage.write(key: 'verificado', value: verificado);
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
