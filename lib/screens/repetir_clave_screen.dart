@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:transfer_app/components/inverted_header_clipper.dart';
-
+import 'package:transfer_app/screens/crear_clave_ingreso_screen.dart';
+import '../components/inverted_header_clipper.dart';
 import 'seleccion_ubicacion_screen.dart';
 
 class RepetirClaveScreen extends StatelessWidget {
@@ -24,18 +24,28 @@ class RepetirClaveScreen extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Repita tu clave',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
+                        // Botón de retroceso
+                        IconButton(
+                          icon: Icon(Icons.arrow_back, color: Colors.white),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
+                        Expanded(
+                          child: Text(
+                            'Repita tu clave',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(width: 40), // Espaciador para mantener simetría
                       ],
                     ),
                   ),
@@ -69,11 +79,27 @@ class RepetirClaveScreen extends StatelessWidget {
               backgroundColor: Colors.transparent,
               enableActiveFill: true,
               onCompleted: (v) {
-                print("Clave repetida: $v");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SeleccionUbicacionScreen()),
-                );
+                if (v == CrearClaveIngresoScreen.claveNotifier.value) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SeleccionUbicacionScreen()),
+                  );
+                } else {
+                  // Muestra un mensaje de error
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text("Error"),
+                      content: Text("Las claves no coinciden. Inténtalo de nuevo."),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text("OK"),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
               onChanged: (value) {},
             ),

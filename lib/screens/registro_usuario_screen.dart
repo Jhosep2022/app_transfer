@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 
-import 'crear_eli_pass_screen.dart';
+import 'alert_crear_eli_pass_screen.dart';
 
 class RegistroUsuarioScreen extends StatefulWidget {
   @override

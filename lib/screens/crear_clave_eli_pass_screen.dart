@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:transfer_app/screens/repite_clave_screen.dart'; // Importa la nueva pantalla aquí
+import 'repite_clave_screen.dart';
 
 class CrearClaveScreen extends StatelessWidget {
+  static ValueNotifier<String> claveEliPassNotifier = ValueNotifier<String>("");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +77,8 @@ class CrearClaveScreen extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 enableActiveFill: true,
                 onCompleted: (v) {
+                  print("Clave creada en CrearClaveScreen: $v"); // Depuración
+                  CrearClaveScreen.claveEliPassNotifier.value = v;
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => RepiteClaveScreen()),

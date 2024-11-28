@@ -8,7 +8,7 @@ class CedulaScannerScreen extends StatefulWidget {
   _CedulaScannerScreenState createState() => _CedulaScannerScreenState();
 }
 
-class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
+class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsBindingObserver {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   String qrText = "";
@@ -17,11 +17,26 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
   final VehiculosService _vehiculosService = VehiculosService();
 
   @override
-  void reassemble() {
-    super.reassemble();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this); // Agrega el observer del ciclo de vida
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); // Elimina el observer
+    controller?.dispose(); // Libera los recursos de la cámara
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
     if (controller != null) {
-      controller!.pauseCamera();
-      controller!.resumeCamera();
+      if (state == AppLifecycleState.paused) {
+        controller!.pauseCamera(); // Pausa la cámara si la app está en segundo plano
+      } else if (state == AppLifecycleState.resumed) {
+        controller!.resumeCamera(); // Reanuda la cámara si la app vuelve a estar activa
+      }
     }
   }
 
@@ -63,10 +78,13 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
                     ),
                   ),
                 ElevatedButton(
-                  onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
-                  ),
+                  onPressed: () {
+                    controller?.stopCamera(); // Detén la cámara antes de navegar
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+                    );
+                  },
                   child: const Text('Volver'),
                 ),
               ],
@@ -80,7 +98,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      controller.pauseCamera(); // Pausar la cámara para evitar lecturas duplicadas
+      controller.pauseCamera(); // Pausa la cámara para evitar lecturas duplicadas
       setState(() {
         qrText = scanData.code!;
       });
@@ -107,13 +125,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> {
         resultMessage = 'Error al verificar el RUT.';
       });
     } finally {
-      controller?.resumeCamera(); // Reanudar la cámara después del proceso
+      controller?.resumeCamera(); // Reanuda la cámara después del proceso
     }
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }

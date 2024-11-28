@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:transfer_app/screens/repetir_clave_screen.dart';
+
+import 'repetir_clave_screen.dart';
 
 class CrearClaveIngresoScreen extends StatelessWidget {
+  static ValueNotifier<String> claveNotifier = ValueNotifier<String>("");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +58,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
                 enableActiveFill: true,
                 onCompleted: (v) {
                   print("Clave ingresada: $v");
+                  CrearClaveIngresoScreen.claveNotifier.value = v; // Almacena la clave
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => RepetirClaveScreen()),
