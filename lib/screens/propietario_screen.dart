@@ -238,9 +238,33 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       Divider(thickness: 2.h, color: Colors.grey[300]),
                       SizedBox(height: 20.h),
 
-                      _buildRadioGroup('¿Vende? ${vendeAutomovil ?? ''}'),
-                      _buildRadioGroup('¿Robado? ${robadoAutomovil ?? ''}'),
-                      _buildRadioGroup('¿Pérdida Total? ${perdidoAutomovil ?? ''}'),
+                      _buildRadioGroup(
+                        label: '¿Vende?',
+                        estado: vendeAutomovil,
+                        onChanged: (bool value) {
+                          setState(() {
+                            vendeAutomovil = value ? "Sí" : "No";
+                          });
+                        },
+                      ),
+                      _buildRadioGroup(
+                        label: '¿Robado?',
+                        estado: robadoAutomovil,
+                        onChanged: (bool value) {
+                          setState(() {
+                            robadoAutomovil = value ? "Sí" : "No";
+                          });
+                        },
+                      ),
+                      _buildRadioGroup(
+                        label: '¿Pérdida Total?',
+                        estado: perdidoAutomovil,
+                        onChanged: (bool value) {
+                          setState(() {
+                            perdidoAutomovil = value ? "Sí" : "No";
+                          });
+                        },
+                      ),
 
                       SizedBox(height: 20.h),
                       Text(
@@ -254,8 +278,24 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       Divider(thickness: 2.h, color: Colors.grey[300]),
                       SizedBox(height: 20.h),
 
-                      _buildRadioGroup('¿R. Técnica? ${tecnicaAutomovil ?? ''}'),
-                      _buildRadioGroup('¿P. Circulación? ${permisoAutomovil ?? ''}'),
+                      _buildRadioGroup(
+                        label: '¿R. Técnica?',
+                        estado: tecnicaAutomovil,
+                        onChanged: (bool value) {
+                          setState(() {
+                            tecnicaAutomovil = value ? "Sí" : "No";
+                          });
+                        },
+                      ),
+                      _buildRadioGroup(
+                        label: '¿P. Circulación?',
+                        estado: permisoAutomovil,
+                        onChanged: (bool value) {
+                          setState(() {
+                            permisoAutomovil = value ? "Sí" : "No";
+                          });
+                        },
+                      ),
                       SizedBox(height: 20.h),
 
                       Row(
@@ -277,16 +317,30 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
   }
 
   // Construye el grupo de botones radiales
-  Widget _buildRadioGroup(String label) {
+  Widget _buildRadioGroup({
+    required String label,
+    required String? estado,
+    required ValueChanged<bool> onChanged,
+  }) {
+    bool? estadoInicial = (estado?.toLowerCase() == "sí");
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.black54)),
         Row(
           children: [
-            Radio(value: false, groupValue: true, onChanged: (val) {}),
+            Radio<bool>(
+              value: false,
+              groupValue: estadoInicial,
+              onChanged: (val) => onChanged(val!),
+            ),
             Text('No', style: TextStyle(fontSize: 14.sp)),
-            Radio(value: true, groupValue: false, onChanged: (val) {}),
+            Radio<bool>(
+              value: true,
+              groupValue: estadoInicial,
+              onChanged: (val) => onChanged(val!),
+            ),
             Text('Sí', style: TextStyle(fontSize: 14.sp)),
           ],
         ),
