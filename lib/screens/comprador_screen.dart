@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/datos_legales_comprador_screen.dart';
-import 'package:transfer_app/screens/placa_denegada_screen.dart'; // Importamos la pantalla de "Placa Denegada"
+import 'package:transfer_app/screens/placa_denegada_screen.dart';
+import 'package:transfer_app/services/vehiculos_service.dart'; // Importamos la pantalla de "Placa Denegada"
 
 class CompradorScreen extends StatefulWidget {
   @override
@@ -12,12 +13,16 @@ class _CompradorScreenState extends State<CompradorScreen> {
   TextEditingController _ppuController = TextEditingController();
   bool _isSearched = false; // Controla si se ha realizado la búsqueda
   String? _selectedRegion; // Almacena la región seleccionada
+  final VehiculosService _vehiculosService = VehiculosService();
 
   // Variables simuladas para mostrar después de la búsqueda
   String tipo = '';
   String anio = '';
   String marca = '';
   String modelo = '';
+  String vendeAutomovil = '';
+  String robadoAutomovil = '';
+  String perdidoAutomovil = '';
 
   // Lista de regiones de Chile
   final List<String> regiones = [
@@ -183,23 +188,55 @@ class _CompradorScreenState extends State<CompradorScreen> {
         ),
         SizedBox(width: 16),
         ElevatedButton(
-          onPressed: () {
-            if (_ppuController.text.length < 6) {
-              // Si tiene menos de 6 dígitos, redirige a la pantalla "Placa Denegada"
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
-              );
-            } else {
-              // Simula la búsqueda y llena los datos si la PPU tiene 6 dígitos
-              setState(() {
-                tipo = 'SUV';
-                anio = '2020';
-                marca = 'Toyota';
-                modelo = 'Highlander';
-                _isSearched = true;
-              });
-            }
+          onPressed: () async {
+            final vehiculosService = VehiculosService();
+            final patente = _ppuController.text;
+
+                              if (patente.isEmpty || patente.length < 6) {
+                                // Mostrar un mensaje de error si la patente es inválida
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Por favor, ingresa una patente válida.')),
+                                );
+                                return;
+                              }
+
+                              // Llamar al servicio y obtener los datos del vehículo
+                              final vehiculo = await vehiculosService.consultarRegistroCivil(patente);
+                              
+                              if (vehiculo != null) {
+                                // Imprimir la respuesta en consola
+                                setState(() {
+                                  tipo = vehiculo.tipo;
+                                  modelo = vehiculo.modelo;
+                                  anio = vehiculo.ano;
+                                  marca = vehiculo.marca;
+                                  vendeAutomovil = vehiculo.estadoVenta;
+                                  robadoAutomovil = vehiculo.estadoRobo;
+                                  perdidoAutomovil = vehiculo.estadoPerdida;
+                                });
+                                print('Vehículo encontrado: ${vehiculo.toJson()}');
+
+                                // Opcional: mostrar los datos en pantalla
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Vehículo encontrado')),
+                                );
+                              } else {
+                                // Si no se encuentra el vehículo
+                                setState(() {
+                                  tipo = "No encontrado";
+                                  modelo = "Sin Modelo";
+                                  anio = "Sin año";
+                                  marca = "Sin marca";
+                                  vendeAutomovil = "Sin información";
+                                  robadoAutomovil = "Sin información";
+                                  perdidoAutomovil = "Sin información";
+                                });
+                                print('No se encontró información para la patente ingresada.');
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('No se encontró información para la patente ingresada.')),
+                                );
+                              }
           },
           child: Text(
             'CONSULTAR',
