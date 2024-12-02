@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
-import '../services/vehiculos_service.dart';
-import 'crear_clave_ingreso_screen.dart';
 
 class CedulaScannerScreen extends StatefulWidget {
   @override
@@ -10,32 +11,34 @@ class CedulaScannerScreen extends StatefulWidget {
 
 class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsBindingObserver {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
-  String qrText = "";
-  String resultMessage = "";
-
-  final VehiculosService _vehiculosService = VehiculosService();
+  QRViewController? _controller;
+  String _qrText = "";
+  String? runEscaneado;
+  String? serialEscaneado;
+  String? tipoEscaneado;
+  String _resultado = "";
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // Agrega el observer del ciclo de vida
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this); // Elimina el observer
-    controller?.dispose(); // Libera los recursos de la cámara
+    WidgetsBinding.instance.removeObserver(this);
+    _controller?.dispose();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (controller != null) {
+    if (_controller != null) {
       if (state == AppLifecycleState.paused) {
-        controller!.pauseCamera(); // Pausa la cámara si la app está en segundo plano
+        _controller!.pauseCamera();
       } else if (state == AppLifecycleState.resumed) {
-        controller!.resumeCamera(); // Reanuda la cámara si la app vuelve a estar activa
+        _controller!.resumeCamera();
       }
     }
   }
@@ -48,7 +51,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
         backgroundColor: Colors.teal,
       ),
       body: Column(
-        children: <Widget>[
+        children: [
           Expanded(
             flex: 4,
             child: QRView(
@@ -61,32 +64,26 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Código escaneado: $qrText',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                if (resultMessage.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text(
-                      resultMessage,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: resultMessage.contains('RUT Verificado') ? Colors.green : Colors.red,
-                      ),
+                if (_isLoading)
+                  const CircularProgressIndicator()
+                else if (_resultado.isNotEmpty)
+                  Text(
+                    _resultado,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: _resultado.contains('Verificado') ? Colors.green : Colors.red,
                     ),
                   ),
-                ElevatedButton(
-                  onPressed: () {
-                    controller?.stopCamera(); // Detén la cámara antes de navegar
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
-                    );
-                  },
-                  child: const Text('Volver'),
-                ),
+                if (!_isLoading && _resultado.isEmpty)
+                  const Text(
+                    'Escanea un código QR para verificar el RUT.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                const SizedBox(height: 20),
+                Text('RUN: ${runEscaneado ?? "No disponible"}'),
+                Text('Serial: ${serialEscaneado ?? "No disponible"}'),
+                Text('Tipo: ${tipoEscaneado ?? "No disponible"}'),
               ],
             ),
           ),
@@ -95,37 +92,144 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
     );
   }
 
+  /// Inicializa el escáner QR
   void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
+    _controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      controller.pauseCamera(); // Pausa la cámara para evitar lecturas duplicadas
+      _controller?.pauseCamera(); // Pausa la cámara para evitar lecturas duplicadas
       setState(() {
-        qrText = scanData.code!;
+        _qrText = scanData.code ?? "";
       });
-      _validateRut(qrText);
+
+      // Imprimir contenido del QR en la consola
+      print("Contenido del QR escaneado: $_qrText");
+
+      // Procesar la URL del QR para extraer los valores
+      _procesarQR(_qrText);
+
+      // Reanudar la cámara después de un tiempo
+      Future.delayed(const Duration(seconds: 3), () {
+        _controller?.resumeCamera();
+      });
     });
   }
 
-  Future<void> _validateRut(String rut) async {
+  /// Procesa el contenido del QR para extraer datos clave
+  void _procesarQR(String qrData) {
     try {
-      final result = await _vehiculosService.verificaRut(rut);
-      if (result != null) {
+      final uri = Uri.parse(qrData);
+
+      // Extraer valores de los parámetros de la URL
+      setState(() {
+        runEscaneado = uri.queryParameters['RUN'];
+        serialEscaneado = uri.queryParameters['serial'];
+        tipoEscaneado = uri.queryParameters['type'];
+      });
+
+      // Imprimir los valores en la consola para depuración
+      print("RUN: $runEscaneado");
+      print("Serial: $serialEscaneado");
+      print("Tipo: $tipoEscaneado");
+
+      // Mostrar un diálogo con los valores extraídos
+      _mostrarDialogoDatos(runEscaneado, serialEscaneado, tipoEscaneado);
+    } catch (e) {
+      print("Error al procesar QR: $e");
+      _mostrarDialogoError();
+    }
+  }
+
+  /// Muestra un diálogo con los datos extraídos del QR
+  void _mostrarDialogoDatos(String? run, String? serial, String? tipo) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Datos Escaneados'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('RUN: ${run ?? "No disponible"}'),
+              Text('Serial: ${serial ?? "No disponible"}'),
+              Text('Tipo: ${tipo ?? "No disponible"}'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// Muestra un diálogo de error si falla el procesamiento del QR
+  void _mostrarDialogoError() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: const Text('No se pudo procesar el QR.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// Valida el RUT llamando al servicio
+  Future<void> _verificarRut(String qrData) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // Extrae el RUT del QR (adaptado a la estructura esperada)
+      String? rut = runEscaneado;
+      if (rut == null) {
         setState(() {
-          resultMessage = result['activo'] == 'true'
-              ? 'RUT Verificado: Activo'
-              : 'RUT No Activo';
+          _resultado = "Error: QR no contiene un RUT válido.";
+          _isLoading = false;
+        });
+        return;
+      }
+
+      // Llama al servicio para verificar el RUT
+      final response = await http.get(Uri.parse(
+          'https://certivip.com/VerificaRut.php?rut_usuario=$rut'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _resultado = (data != null && data.length > 0)
+              ? "RUT Verificado: Activo"
+              : "RUT no encontrado o no activo.";
         });
       } else {
         setState(() {
-          resultMessage = 'RUT no encontrado.';
+          _resultado = "Error en la conexión al servicio.";
         });
       }
     } catch (e) {
       setState(() {
-        resultMessage = 'Error al verificar el RUT.';
+        _resultado = "Error: No se pudo procesar la solicitud.";
       });
     } finally {
-      controller?.resumeCamera(); // Reanuda la cámara después del proceso
+      setState(() {
+        _isLoading = false;
+      });
+      _controller?.resumeCamera();
     }
   }
 }
