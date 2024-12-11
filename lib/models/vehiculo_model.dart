@@ -9,6 +9,7 @@ class Vehiculo {
   final String estadoPerdida;
   final String estadoTecnica;
   final String estadoPermiso;
+  final String region;
 
   Vehiculo({
     required this.patente,
@@ -21,6 +22,7 @@ class Vehiculo {
     required this.estadoPerdida,
     required this.estadoTecnica,
     required this.estadoPermiso,
+    required this.region,
   });
 
   factory Vehiculo.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class Vehiculo {
       estadoPerdida: json['sperdida'] ?? 'No',
       estadoTecnica: json['stecnica'] ?? 'No',
       estadoPermiso: json['spermiso'] ?? 'No',
+      region: json['noregion'] ?? 'No',
     );
   }
     // Convertir un Vehiculo a JSON
@@ -45,11 +48,12 @@ class Vehiculo {
       'marcacivil': marca,
       'modelocivil': modelo,
       'anucivil': ano,
-      //'sventa': estadoVenta,
-      //'srobo': estadoRobo,
-      //'sperdida': estadoPerdida,
-      //'stecnica': estadoTecnica,
-      //'spermiso': estadoPermiso,
+      'sventa': estadoVenta,
+      'srobo': estadoRobo,
+      'sperdida': estadoPerdida,
+      'stecnica': estadoTecnica,
+      'spermiso': estadoPermiso,
+      'noregion': region,
     };
   }
 }

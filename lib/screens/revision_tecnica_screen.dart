@@ -1,7 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:transfer_app/components/inverted_header_clipper.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:transfer_app/services/revision_tecnica_service.dart';
 
-class RevisionTecnicaScreen extends StatelessWidget {
+class RevisionTecnicaScreen extends StatefulWidget {
+  @override
+  _RevisionTecnicaScreenState createState() => _RevisionTecnicaScreenState();
+}
+
+class _RevisionTecnicaScreenState extends State<RevisionTecnicaScreen> {
+  final TextEditingController _ppuController = TextEditingController();
+  final RevisionTecnicaService _service = RevisionTecnicaService();
+  String? _htmlContent;
+  String? _error;
+  bool _isLoading = false;
+
+  void _consultarDatosRevisionTecnica() async {
+  final ppu = _ppuController.text.trim();
+  if (ppu.isEmpty || ppu.length != 6) {
+    setState(() {
+      _error = 'Ingrese una PPU válida (6 caracteres).';
+      _htmlContent = null;
+      _isLoading = false;
+    });
+    return;
+  }
+
+  setState(() {
+    _error = null;
+    _htmlContent = null;
+    _isLoading = true;
+  });
+
+  try {
+    final html = await _service.fetchHtml(ppu);
+
+    // Agregar la etiqueta <base> al HTML
+    final baseUrl = 'https://www.prt.cl/';
+    final modifiedHtml = '''
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <base href="$baseUrl">
+      </head>
+      <body>
+        $html
+      </body>
+      </html>
+    ''';
+
+    setState(() {
+      _htmlContent = modifiedHtml;
+      _isLoading = false;
+    });
+  } catch (e) {
+    setState(() {
+      _error = 'Error al obtener los datos: $e';
+      _htmlContent = null;
+      _isLoading = false;
+    });
+  }
+}
+
+
+  Widget _buildDatosRevisionTecnica() {
+    if (_isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (_error != null) {
+      return Text(
+        _error!,
+        style: TextStyle(color: Colors.red),
+      );
+    }
+
+    if (_htmlContent == null) {
+      return Text('Ingrese una PPU y presione "Consultar" para ver los datos.');
+    }
+
+    return Container(
+      height: 400, // Ajusta según sea necesario
+      child: InAppWebView(
+        initialData: InAppWebViewInitialData(data: _htmlContent!),
+        initialOptions: InAppWebViewGroupOptions(
+          crossPlatform: InAppWebViewOptions(
+            javaScriptEnabled: true,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,199 +100,72 @@ class RevisionTecnicaScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Cabecera curvada como en PropietarioScreen
-            Stack(
-              children: [
-                ClipPath(
-                  clipper: InvertedHeaderClipper(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.teal,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.arrow_back, color: Colors.white),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                              Icon(Icons.settings, color: Colors.white),
-                            ],
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            'REVISIÓN TÉCNICA',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildPpuField(), // Campo de entrada de P.P.U. y botón "Consultar"
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _ppuController,
+                          maxLength: 6,
+                          textCapitalization: TextCapitalization.characters,
+                          decoration: InputDecoration(
+                            labelText: 'PPU',
+                            border: UnderlineInputBorder(),
+                            counterText: '',
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      ElevatedButton(
+                        onPressed: _consultarDatosRevisionTecnica,
+                        child: Text(
+                          'CONSULTAR',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          backgroundColor: Colors.teal,
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 20),
-                  _buildRecaptcha(), // Componente simulado del reCAPTCHA
+                  _buildDatosRevisionTecnica(),
                   SizedBox(height: 20),
-                  _buildDatosRevisionTecnica(), // Tabla con los datos de revisión técnica
-                  SizedBox(height: 20),
-                  _buildVolverButton(context), // Botón "Volver"
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'VOLVER',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      backgroundColor: Colors.teal,
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  // Campo de entrada de P.P.U. y botón "Consultar"
-  Widget _buildPpuField() {
-    return Row(
-      children: [
-        Expanded(
-          child: TextField(
-            maxLength: 6, // Limitar a 6 caracteres
-            textCapitalization: TextCapitalization.characters, // Forzar mayúsculas
-            decoration: InputDecoration(
-              labelText: 'PPU',
-              border: UnderlineInputBorder(),
-              counterText: '', // Ocultar el contador de caracteres
-            ),
-          ),
-        ),
-        SizedBox(width: 16),
-        ElevatedButton(
-          onPressed: () {
-            // Acción al presionar "Consultar"
-          },
-          child: Text(
-            'CONSULTAR',
-            style: TextStyle(
-              color: Colors.white, // Texto blanco
-              fontWeight: FontWeight.bold, // Negrita
-            ),
-          ),
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            backgroundColor: Colors.teal, // Color del botón
-          ),
-        ),
-      ],
-    );
-  }
-
-  // Simulación del reCAPTCHA
-  Widget _buildRecaptcha() {
-    return Column(
-      children: [
-        CheckboxListTile(
-          title: Text('No soy un robot'),
-          value: false, // Simulación, no funcional
-          onChanged: (bool? value) {},
-          controlAffinity: ListTileControlAffinity.leading,
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Enviar'),
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            backgroundColor: Colors.grey[300], // Fondo gris claro
-          ),
-        ),
-      ],
-    );
-  }
-
-  // Sección de datos de la revisión técnica
-  Widget _buildDatosRevisionTecnica() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Datos Revisión Técnica',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10),
-        _buildDataRow('PLACA PATENTE:', 'BBBB22'),
-        _buildDataRow('Marca:', 'TOYOTA'),
-        _buildDataRow('Tipo:', 'AUTOMOVIL'),
-        _buildDataRow('Modelo:', 'YARIS XLI 1.5'),
-        _buildDataRow('Año Fab.:', '2008'),
-        _buildDataRow('Tipo Sello:', 'SELLO VERDE'),
-        _buildDataRow('Región:', 'VI del Libertador B. O’Higgins'),
-        _buildDataRow('Nº Cert:', 'B061100000185990'),
-      ],
-    );
-  }
-
-  // Filas de los datos de revisión técnica
-  Widget _buildDataRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              label,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(value),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Botón "Volver"
-  Widget _buildVolverButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      child: Text(
-        'VOLVER',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold, // Texto en negrita
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        backgroundColor: Colors.teal, // Color del botón
       ),
     );
   }

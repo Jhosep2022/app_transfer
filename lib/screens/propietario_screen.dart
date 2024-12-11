@@ -25,6 +25,22 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
   String? tecnicaAutomovil;
   String? permisoAutomovil;
 
+  String? patenteCivil;
+  String? digitoCivil;
+  String? nombreCivil;
+  String? vinCivil;
+  String? chasisCivil;
+  String? serieCivil;
+  String? motorCivil;
+  String? rutCivil;
+  String? tipoCivil;
+  String? anuCivil;
+  String? modeloCivil;
+  String? marcaCivil;
+  String? colorCivil;
+
+  String _isComprador = "7756527-2";
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -128,22 +144,45 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                               }
 
                               // Llamar al servicio y obtener los datos del vehículo
-                              final vehiculo = await vehiculosService.consultarRegistroCivil(patente);
-                              
-                              if (vehiculo != null) {
+                              final vehiculo = await vehiculosService.consultarRegistroInterno(patente);
+                              final consultaVechiculo = await vehiculosService.consultarRegistroCivil(patente);
+                              if (vehiculo != null && consultaVechiculo != null) {
                                 // Imprimir la respuesta en consola
                                 setState(() {
                                   tipoAutomovil = vehiculo.tipo;
                                   modeloAutomovil = vehiculo.modelo;
                                   anoAutomovil = vehiculo.ano;
                                   marcaAutomovil = vehiculo.marca;
-                                  vendeAutomovil = vehiculo.estadoVenta;
-                                  robadoAutomovil = vehiculo.estadoRobo;
-                                  perdidoAutomovil = vehiculo.estadoPerdida;
-                                  tecnicaAutomovil = vehiculo.estadoTecnica;
-                                  permisoAutomovil = vehiculo.estadoPermiso;
+                                  vendeAutomovil = vehiculo.estadoVenta?.toLowerCase() == "sí" ? "Sí" : "No";
+                                  robadoAutomovil = vehiculo.estadoRobo?.toLowerCase() == "sí" ? "Sí" : "No";
+                                  perdidoAutomovil = vehiculo.estadoPerdida?.toLowerCase() == "sí" ? "Sí" : "No";
+                                  tecnicaAutomovil = vehiculo.estadoTecnica?.toLowerCase() == "sí" ? "Sí" : "No";
+                                  permisoAutomovil = vehiculo.estadoPermiso?.toLowerCase() == "sí" ? "Sí" : "No";
+                                
+                                  patenteCivil = consultaVechiculo?.patenteCivil;
+                                  digitoCivil = consultaVechiculo?.digitoCivil;
+                                  nombreCivil = consultaVechiculo?.nombreCivil;
+                                  vinCivil = consultaVechiculo?.vinCivil;
+                                  chasisCivil = consultaVechiculo?.chasisCivil;
+                                  serieCivil = consultaVechiculo?.serieCivil;
+                                  motorCivil = consultaVechiculo?.motorCivil;
+                                  rutCivil = consultaVechiculo?.rutCivil;
+                                  tipoCivil = consultaVechiculo?.tipoCivil;
+                                  anuCivil = consultaVechiculo?.anuCivil;
+                                  marcaCivil = consultaVechiculo?.marcaCivil;
+                                  modeloCivil = consultaVechiculo?.modeloCivil;
+                                  colorCivil = consultaVechiculo?.colorCivil;
                                 });
                                 print('Vehículo encontrado: ${vehiculo.toJson()}');
+                                print('Consulta encontrada: ${consultaVechiculo.toJson()}');
+
+                                if(_isComprador == rutCivil){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
+                                  );
+                                  return;
+                                }
 
                                 // Opcional: mostrar los datos en pantalla
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -156,11 +195,26 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                                   modeloAutomovil = "Sin Modelo";
                                   anoAutomovil = "Sin año";
                                   marcaAutomovil = "Sin marca";
-                                  vendeAutomovil = "Sin información";
-                                  robadoAutomovil = "Sin información";
-                                  perdidoAutomovil = "Sin información";
-                                  tecnicaAutomovil = "Sin información";
-                                  permisoAutomovil = "Sin información";
+                                  vendeAutomovil = "No";
+                                  robadoAutomovil = "No";
+                                  perdidoAutomovil = "No";
+                                  tecnicaAutomovil = "No";
+                                  permisoAutomovil = "No";
+
+                                  patenteCivil = "Sin patente";
+                                  digitoCivil = "Sin dígito";
+                                  nombreCivil = "Sin nombre";
+                                  vinCivil = "Sin VIN";
+                                  chasisCivil = "Sin chasis";
+                                  serieCivil = "Sin serie";
+                                  rutCivil = "Sin rut";
+                                  motorCivil = "Sin motor";
+                                  tipoCivil = "Sin tipo";
+                                  anuCivil = "Sin año";
+                                  marcaCivil = "Sin marca";
+                                  modeloCivil = "Sin modelo";
+                                  colorCivil = "Sin color";
+                                  _buildRadioGroup;
                                 });
                                 print('No se encontró información para la patente ingresada.');
 
@@ -279,7 +333,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       SizedBox(height: 20.h),
 
                       _buildRadioGroup(
-                        label: '¿R. Técnica?',
+                        label: '¿R. Técnica? $tecnicaAutomovil',
                         estado: tecnicaAutomovil,
                         onChanged: (bool value) {
                           setState(() {
@@ -322,7 +376,9 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
     required String? estado,
     required ValueChanged<bool> onChanged,
   }) {
-    bool? estadoInicial = (estado?.toLowerCase() == "sí");
+    // Convertir el estado inicial a un booleano
+    bool estadoInicial = estado?.toLowerCase() == "sí";
+    print('Estado inicial de $label: $estado (convertido a $estadoInicial)');
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -330,16 +386,19 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
         Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.black54)),
         Row(
           children: [
+            // Radio para "No"
             Radio<bool>(
-              value: false,
-              groupValue: estadoInicial,
-              onChanged: (val) => onChanged(val!),
+              value: false, // Valor de este radio
+              groupValue: estadoInicial, // Valor actual del grupo
+              onChanged: (val) => onChanged(val!), // Notificar cambios
             ),
             Text('No', style: TextStyle(fontSize: 14.sp)),
+
+            // Radio para "Sí"
             Radio<bool>(
-              value: true,
-              groupValue: estadoInicial,
-              onChanged: (val) => onChanged(val!),
+              value: true, // Valor de este radio
+              groupValue: estadoInicial, // Valor actual del grupo
+              onChanged: (val) => onChanged(val!), // Notificar cambios
             ),
             Text('Sí', style: TextStyle(fontSize: 14.sp)),
           ],
@@ -348,24 +407,72 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
     );
   }
 
+
   Widget _buildActionButton(String label, BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        if (label == 'CONTINUAR') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
-          );
+  return ElevatedButton(
+    onPressed: () async {
+      if(_isComprador == rutCivil){
+        if (label == 'ACTUALIZAR' && tipoAutomovil != null) {
+          final params = {
+            'patentecivil': _ppuController.text, // PPU ingresado
+            'sventa': vendeAutomovil ?? 'No',   // Estado de venta
+            'srobo': robadoAutomovil ?? 'No',  // Estado de robo
+            'sperdida': perdidoAutomovil ?? 'No', // Estado de pérdida total
+            'novende': vendeAutomovil == 'No' ? '1' : '0', // Invertir lógica para almacenar
+            'noroba': robadoAutomovil == 'No' ? '1' : '0',
+            'noperdida': perdidoAutomovil == 'No' ? '1' : '0',
+            'stecnica': tecnicaAutomovil ?? 'No', // Revisión técnica
+            'spermiso': permisoAutomovil ?? 'No', // Permiso de circulación
+          };
+
+          try {
+            final vehiculosService = VehiculosService();
+            await vehiculosService.actualizarVehiculo(params);
+
+            // Mostrar mensaje de éxito
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Datos actualizados exitosamente')),
+            );
+          } catch (e) {
+            // Manejar errores
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error al actualizar los datos: $e')),
+            );
+          }
+        } else if (label == 'CONTINUAR' && tipoAutomovil != null) {
+          // Continuar a la siguiente pantalla
+          if(vendeAutomovil == "Sí"){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),
+            );
+          }else{
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
+            );
+          }
         }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.teal,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
+        );
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.teal,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
+    ),
+    child: Text(
+      label,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.bold,
       ),
-      child: Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.white)),
-    );
-  }
+    ),
+  );
+}
 }

@@ -29,7 +29,7 @@ class _RepresentanteScannerScreenState extends State<RepresentanteScannerScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Escanear Cédula de Identidad'),
+        title: const Text('édula de Identidad'),
         backgroundColor: Colors.teal,
       ),
       body: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/datos_legales_comprador_screen.dart';
+import 'package:transfer_app/screens/impuesto_municipal_screen.dart';
 import 'package:transfer_app/screens/placa_denegada_screen.dart';
 import 'package:transfer_app/services/vehiculos_service.dart'; // Importamos la pantalla de "Placa Denegada"
 
@@ -11,6 +12,9 @@ class CompradorScreen extends StatefulWidget {
 
 class _CompradorScreenState extends State<CompradorScreen> {
   TextEditingController _ppuController = TextEditingController();
+  TextEditingController _chasisCivilController = TextEditingController();
+  TextEditingController _chasisCivilRepeatController = TextEditingController();
+
   bool _isSearched = false; // Controla si se ha realizado la búsqueda
   String? _selectedRegion; // Almacena la región seleccionada
   final VehiculosService _vehiculosService = VehiculosService();
@@ -23,6 +27,21 @@ class _CompradorScreenState extends State<CompradorScreen> {
   String vendeAutomovil = '';
   String robadoAutomovil = '';
   String perdidoAutomovil = '';
+  String region = '';
+
+  String patenteCivil = '';
+  String digitoCivil = '';
+  String nombreCivil = '';
+  String vinCivil = '';
+  String chasisCivil = '';
+  String serieCivil = '';
+  String motorCivil = '';
+  String rutCivil = '';
+  String tipoCivil = '';
+  String anuCivil = '';
+  String modeloCivil = '';
+  String marcaCivil = '';
+  String colorCivil = '';
 
   // Lista de regiones de Chile
   final List<String> regiones = [
@@ -65,10 +84,10 @@ class _CompradorScreenState extends State<CompradorScreen> {
                   _buildPpuField(),
                   SizedBox(height: 20),
                   // Campo de ID Chasis
-                  _buildTextField(labelText: 'ID CHASIS', hintText: 'Nro. Chasis directo del Vehículo'),
+                  _buildTextField(labelText: 'ID CHASIS', hintText: 'Nro. Chasis directo del Vehículo', controller: _chasisCivilController),
                   SizedBox(height: 16),
                   // Campo para repetir Nro. Chasis
-                  _buildTextField(labelText: 'REPITE NRO.', hintText: 'Repite Nro de Chasis'),
+                  _buildTextField(labelText: 'REPITE NRO.', hintText: 'Repite Nro de Chasis', controller: _chasisCivilRepeatController),
                   SizedBox(height: 20),
                   // Sección de detalles: Tipo, Año, Marca, Modelo
                   _buildCarDetails(),
@@ -201,9 +220,10 @@ class _CompradorScreenState extends State<CompradorScreen> {
                               }
 
                               // Llamar al servicio y obtener los datos del vehículo
-                              final vehiculo = await vehiculosService.consultarRegistroCivil(patente);
+                              final vehiculo = await vehiculosService.consultarRegistroInterno(patente);
+                              final consultaVechiculo = await vehiculosService.consultarRegistroCivil(patente);
                               
-                              if (vehiculo != null) {
+                              if (vehiculo != null && consultaVechiculo != null) {
                                 // Imprimir la respuesta en consola
                                 setState(() {
                                   tipo = vehiculo.tipo;
@@ -213,6 +233,21 @@ class _CompradorScreenState extends State<CompradorScreen> {
                                   vendeAutomovil = vehiculo.estadoVenta;
                                   robadoAutomovil = vehiculo.estadoRobo;
                                   perdidoAutomovil = vehiculo.estadoPerdida;
+                                  region = vehiculo.region;
+                                
+                                  patenteCivil = consultaVechiculo.patenteCivil;
+                                  digitoCivil = consultaVechiculo.digitoCivil;
+                                  nombreCivil = consultaVechiculo.nombreCivil;
+                                  vinCivil = consultaVechiculo.vinCivil;
+                                  chasisCivil = consultaVechiculo.chasisCivil;
+                                  serieCivil = consultaVechiculo.serieCivil;
+                                  motorCivil = consultaVechiculo.motorCivil;
+                                  rutCivil = consultaVechiculo.rutCivil;
+                                  tipoCivil = consultaVechiculo.tipoCivil;
+                                  anuCivil = consultaVechiculo.anuCivil;
+                                  marcaCivil = consultaVechiculo.marcaCivil;
+                                  modeloCivil = consultaVechiculo.modeloCivil;
+                                  colorCivil = consultaVechiculo.colorCivil;
                                 });
                                 print('Vehículo encontrado: ${vehiculo.toJson()}');
 
@@ -230,6 +265,21 @@ class _CompradorScreenState extends State<CompradorScreen> {
                                   vendeAutomovil = "Sin información";
                                   robadoAutomovil = "Sin información";
                                   perdidoAutomovil = "Sin información";
+                                  region = "Sin región";
+
+                                  patenteCivil = "Sin patente";
+                                  digitoCivil = "Sin dígito";
+                                  nombreCivil = "Sin nombre";
+                                  vinCivil = "Sin VIN";
+                                  chasisCivil = "Sin chasis";
+                                  serieCivil = "Sin serie";
+                                  rutCivil = "Sin rut";
+                                  motorCivil = "Sin motor";
+                                  tipoCivil = "Sin tipo";
+                                  anuCivil = "Sin año";
+                                  marcaCivil = "Sin marca";
+                                  modeloCivil = "Sin modelo";
+                                  colorCivil = "Sin color";
                                 });
                                 print('No se encontró información para la patente ingresada.');
 
@@ -257,8 +307,9 @@ class _CompradorScreenState extends State<CompradorScreen> {
     );
   }
 
-  Widget _buildTextField({required String labelText, required String hintText}) {
+  Widget _buildTextField({required String labelText, required String hintText, required TextEditingController controller}) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
@@ -317,10 +368,24 @@ class _CompradorScreenState extends State<CompradorScreen> {
   Widget _buildContinueButton() {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DatosLegalesCompradorScreen()),
-        );
+        if(robadoAutomovil == "Sí"){
+          buildDialog(context, 'Vehículo Robado', 'El vehículo que intenta comprar se encuentra en la lista de vehículos robados. Por favor, contacte a las autoridades.');
+        }
+        if(perdidoAutomovil == "Sí"){
+          buildDialog(context, 'Vehículo Perdido', 'El vehículo que intenta comprar se encuentra en la lista de vehículos perdidos. Por favor, contacte a las autoridades.'); 
+        }
+        if(vendeAutomovil == "Sí"){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),
+            );
+        }
+        if(_chasisCivilController != _chasisCivilRepeatController && chasisCivil != _chasisCivilRepeatController.text){
+          buildDialog(context, 'Chasis Incorrecto', 'El número de chasis ingresado no coincide. Por favor, verifique los datos ingresados.');
+        }
+        if(vendeAutomovil == "No"){
+          buildDialog(context, 'Vehículo no esta en Venta', 'El vehículo que intenta comprar se encuentra en la lista de vehículos no esta en venta.');          
+        }
       },
       child: Text(
         'CONTINUAR',
@@ -338,4 +403,25 @@ class _CompradorScreenState extends State<CompradorScreen> {
       ),
     );
   }
+
+  void buildDialog(BuildContext context, String title, String content) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }

@@ -1,14 +1,35 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:transfer_app/environment/environment.dart';
+import 'package:transfer_app/models/consulta_registro_civil_model.dart';
 import '../models/vehiculo_model.dart';
 
 class VehiculosService {
   final String baseUrl = Environment.baseUrl;
 
   // Consultar un vehículo en el Registro Civil
-  Future<Vehiculo?> consultarRegistroCivil(String patente) async {
+  Future<ConsultaRegistroCivil?> consultarRegistroCivil(String patente) async {
     final url = Uri.parse('$baseUrl/ConsultaRegistroCivil.php?patentecivil=$patente');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        if (data.isNotEmpty) {
+          print("Vehículo encontrado en el registro civil xdxdxd. $data");
+          return ConsultaRegistroCivil.fromJson(data[0]);
+        }else{
+          print("Vehículo no encontrado en el registro civil xdxdxd.");
+        }
+      }
+    } catch (e) {
+      print("Error al consultar el registro civil: $e");
+    }
+    return null;
+  }
+
+  // Consultar vehículo en el registro interno
+  Future<Vehiculo?> consultarRegistroInterno(String patente) async {
+    final url = Uri.parse('$baseUrl/buscarregistrocivil.php?patentecivil=$patente');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -22,33 +43,6 @@ class VehiculosService {
       }
     } catch (e) {
       print("Error al consultar el registro civil: $e");
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        if (data.isNotEmpty) {
-          print("Vehículo encontrado en el registro civil zzzz. $data");
-          return Vehiculo.fromJson(data[0]);
-        }else{
-          print("Vehículo no encontrado en el registro civil zzzz.");
-        }
-      }
-    }
-    return null;
-  }
-
-  // Consultar vehículo en el registro interno
-  Future<Vehiculo?> consultarRegistroInterno(String patente) async {
-    final url = Uri.parse('$baseUrl/buscarregistrocivil.php?patentecivil=$patente');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        if (data.isNotEmpty) {
-          return Vehiculo.fromJson(data[0]);
-        }
-      }
-    } catch (e) {
-      print("Error al consultar el registro interno: $e");
     }
     return null;
   }

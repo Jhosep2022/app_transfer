@@ -20,6 +20,9 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
     if (precioVenta != null && avaluoFiscal != null) {
       // Tomar el mayor valor entre precio de venta y avalúo fiscal
       double mayorValor = precioVenta > avaluoFiscal ? precioVenta : avaluoFiscal;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Calculo realizado correctamente')),
+          );
 
       // Calcular el 1.5% del valor mayor
       setState(() {
@@ -27,6 +30,9 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
         _impuestoResult = mayorValor * 0.015;
       });
     } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Ingrese datos válidos')),
+          );
       // Si hay algún error en los inputs, muestra 0 o maneja el error
       setState(() {
         _valorBase = 0.0;
@@ -50,11 +56,11 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.23,
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.teal,
                     ),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -62,14 +68,14 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.arrow_back, color: Colors.white),
+                                icon: const Icon(Icons.arrow_back, color: Colors.white),
                                 onPressed: () => Navigator.pop(context), 
                               ),
-                              Icon(Icons.settings, color: Colors.white),
+                              const Icon(Icons.settings, color: Colors.white),
                             ],
                           ),
-                          SizedBox(height: 20),
-                          Text(
+                          const SizedBox(height: 20),
+                          const Text(
                             'Cálculo Impuesto Municipal', 
                             style: TextStyle(
                               color: Colors.white,
@@ -89,24 +95,24 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Row(
                     children: [
                       Expanded(
                         child: TextField(
                           controller: _ventaController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Monto precio Venta',
                             border: OutlineInputBorder(),
                           ),
                           keyboardType: TextInputType.number,
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: TextField(
                           controller: _avaluoController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Monto Avalúo fiscal',
                             border: OutlineInputBorder(),
                           ),
@@ -115,49 +121,49 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Monto base cálculo Imptos.',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   // Muestra el valor que se está usando para calcular el impuesto
                   if (_valorBase != null)
                     Text(
                       'Valor utilizado para cálculo: \$${_valorBase!.toStringAsFixed(2)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),
                     ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   // Muestra el resultado del cálculo del impuesto si está disponible
                   if (_impuestoResult != null)
                     Text(
                       '1.5% Impuesto a pagar: \$${_impuestoResult!.toStringAsFixed(2)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),
                     ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: _calcularImpuesto, // Al presionar el botón se ejecuta el cálculo
-                        child: Text(
-                          'CALCULAR',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                        onPressed: _calcularImpuesto,
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                           backgroundColor: Colors.teal,
+                        ), // Al presionar el botón se ejecuta el cálculo
+                        child: const Text(
+                          'CALCULAR',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                       ElevatedButton(
@@ -167,16 +173,16 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                             MaterialPageRoute(builder: (context) => DatosLegalesScreen()),
                           );
                         },
-                        child: Text(
-                          'GUARDAR',
-                          style: TextStyle(color: Colors.white),
-                        ),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                           backgroundColor: Colors.teal,
+                        ),
+                        child: const Text(
+                          'GUARDAR',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],

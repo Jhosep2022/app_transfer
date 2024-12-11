@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
+import 'package:transfer_app/screens/comprador_screen.dart';
+import 'package:transfer_app/screens/instituciones_estado_screen.dart';
+import 'package:transfer_app/screens/propietario_screen.dart';
 import 'package:transfer_app/screens/terminos_condiciones_screen.dart';
 import 'package:transfer_app/screens/politica_privacidad_screen.dart';
 import 'package:transfer_app/screens/cedula_scanner_screen.dart'; // Pantalla de escaneo de cédula
@@ -92,6 +95,12 @@ class TransferenciaPPUScreen extends StatelessWidget {
                       _buildButton(context, 'CÉDULA IDENTIDAD', CedulaScannerScreen()),
                       SizedBox(height: 16),
                       _buildButton(context, 'E-RUT', ERutScannerScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, 'E-RUT', CompradorScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, 'E-RUT', PropietarioScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, 'E-RUT', InstitucionesEstadoScreen()),
                       SizedBox(height: 30),
                       _buildTextButton(context, 'TÉRMINOS Y CONDICIONES'),
                       SizedBox(height: 8),
