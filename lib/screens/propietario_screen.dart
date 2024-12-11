@@ -146,48 +146,49 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                               // Llamar al servicio y obtener los datos del vehículo
                               final vehiculo = await vehiculosService.consultarRegistroInterno(patente);
                               final consultaVechiculo = await vehiculosService.consultarRegistroCivil(patente);
-                              if (vehiculo != null && consultaVechiculo != null) {
-                                // Imprimir la respuesta en consola
-                                setState(() {
-                                  tipoAutomovil = vehiculo.tipo;
-                                  modeloAutomovil = vehiculo.modelo;
-                                  anoAutomovil = vehiculo.ano;
-                                  marcaAutomovil = vehiculo.marca;
-                                  vendeAutomovil = vehiculo.estadoVenta?.toLowerCase() == "sí" ? "Sí" : "No";
-                                  robadoAutomovil = vehiculo.estadoRobo?.toLowerCase() == "sí" ? "Sí" : "No";
-                                  perdidoAutomovil = vehiculo.estadoPerdida?.toLowerCase() == "sí" ? "Sí" : "No";
-                                  tecnicaAutomovil = vehiculo.estadoTecnica?.toLowerCase() == "sí" ? "Sí" : "No";
-                                  permisoAutomovil = vehiculo.estadoPermiso?.toLowerCase() == "sí" ? "Sí" : "No";
-                                
-                                  patenteCivil = consultaVechiculo?.patenteCivil;
-                                  digitoCivil = consultaVechiculo?.digitoCivil;
-                                  nombreCivil = consultaVechiculo?.nombreCivil;
-                                  vinCivil = consultaVechiculo?.vinCivil;
-                                  chasisCivil = consultaVechiculo?.chasisCivil;
-                                  serieCivil = consultaVechiculo?.serieCivil;
-                                  motorCivil = consultaVechiculo?.motorCivil;
-                                  rutCivil = consultaVechiculo?.rutCivil;
-                                  tipoCivil = consultaVechiculo?.tipoCivil;
-                                  anuCivil = consultaVechiculo?.anuCivil;
-                                  marcaCivil = consultaVechiculo?.marcaCivil;
-                                  modeloCivil = consultaVechiculo?.modeloCivil;
-                                  colorCivil = consultaVechiculo?.colorCivil;
-                                });
-                                print('Vehículo encontrado: ${vehiculo.toJson()}');
-                                print('Consulta encontrada: ${consultaVechiculo.toJson()}');
-
-                                if(_isComprador == rutCivil){
+                              if (vehiculo != null && consultaVechiculo != null) {                               
+                                if(_isComprador != consultaVechiculo?.rutCivil){
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
                                   );
                                   return;
-                                }
+                                }else{
+                                  // Imprimir la respuesta en consola
+                                  setState(() {
+                                    tipoAutomovil = vehiculo.tipo;
+                                    modeloAutomovil = vehiculo.modelo;
+                                    anoAutomovil = vehiculo.ano;
+                                    marcaAutomovil = vehiculo.marca;
+                                    vendeAutomovil = vehiculo.estadoVenta?.toLowerCase() == "sí" ? "Sí" : "No";
+                                    robadoAutomovil = vehiculo.estadoRobo?.toLowerCase() == "sí" ? "Sí" : "No";
+                                    perdidoAutomovil = vehiculo.estadoPerdida?.toLowerCase() == "sí" ? "Sí" : "No";
+                                    tecnicaAutomovil = vehiculo.estadoTecnica?.toLowerCase() == "sí" ? "Sí" : "No";
+                                    permisoAutomovil = vehiculo.estadoPermiso?.toLowerCase() == "sí" ? "Sí" : "No";
+                                  
+                                    patenteCivil = consultaVechiculo?.patenteCivil;
+                                    digitoCivil = consultaVechiculo?.digitoCivil;
+                                    nombreCivil = consultaVechiculo?.nombreCivil;
+                                    vinCivil = consultaVechiculo?.vinCivil;
+                                    chasisCivil = consultaVechiculo?.chasisCivil;
+                                    serieCivil = consultaVechiculo?.serieCivil;
+                                    motorCivil = consultaVechiculo?.motorCivil;
+                                    rutCivil = consultaVechiculo?.rutCivil;
+                                    tipoCivil = consultaVechiculo?.tipoCivil;
+                                    anuCivil = consultaVechiculo?.anuCivil;
+                                    marcaCivil = consultaVechiculo?.marcaCivil;
+                                    modeloCivil = consultaVechiculo?.modeloCivil;
+                                    colorCivil = consultaVechiculo?.colorCivil;
+                                  });
+                                  print('Vehículo encontrado: ${vehiculo.toJson()}');
+                                  print('Consulta encontrada: ${consultaVechiculo.toJson()}');
 
-                                // Opcional: mostrar los datos en pantalla
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Vehículo encontrado')),
-                                );
+                                  // Opcional: mostrar los datos en pantalla
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Vehículo encontrado')),
+                                  );
+                                  
+                                }
                               } else {
                                 // Si no se encuentra el vehículo
                                 setState(() {
