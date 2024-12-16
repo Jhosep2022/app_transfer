@@ -377,7 +377,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
         if(vendeAutomovil == "Sí"){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),
+              MaterialPageRoute(builder: (context) => DatosLegalesCompradorScreen()),
             );
         }
         if(_chasisCivilController != _chasisCivilRepeatController && chasisCivil != _chasisCivilRepeatController.text){

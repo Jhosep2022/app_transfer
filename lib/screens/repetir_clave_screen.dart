@@ -5,6 +5,7 @@ import '../components/inverted_header_clipper.dart';
 import 'seleccion_ubicacion_screen.dart';
 
 class RepetirClaveScreen extends StatelessWidget {
+  late final String clave;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +83,9 @@ class RepetirClaveScreen extends StatelessWidget {
                 if (v == CrearClaveIngresoScreen.claveNotifier.value) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SeleccionUbicacionScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => SeleccionUbicacionScreen(clave: v),
+                    ),
                   );
                 } else {
                   // Muestra un mensaje de error

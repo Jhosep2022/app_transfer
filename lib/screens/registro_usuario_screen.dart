@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
-
 import 'alert_crear_eli_pass_screen.dart';
 
 class RegistroUsuarioScreen extends StatefulWidget {
+  final String clave;
+  final String region;
+  final String comuna;
+
+  RegistroUsuarioScreen({
+    required this.clave,
+    required this.region,
+    required this.comuna,
+  });
+
   @override
   _RegistroUsuarioScreenState createState() => _RegistroUsuarioScreenState();
 }
@@ -66,6 +75,23 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
               padding: EdgeInsets.all(24.0),
               child: Column(
                 children: [
+                  // Mostrar datos recibidos
+                  Text(
+                    'Clave: ${widget.clave}',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Región: ${widget.region}',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Comuna: ${widget.comuna}',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 16),
+
                   // Campos de texto
                   Row(
                     children: [

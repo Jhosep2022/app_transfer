@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
@@ -140,7 +141,14 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
   }
 
   /// Muestra un diálogo con los datos extraídos del QR
-  void _mostrarDialogoDatos(String? run, String? serial, String? tipo) {
+  void _mostrarDialogoDatos(String? run, String? serial, String? tipo) async {
+    // Guardar los datos en SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('run', run ?? "No disponible");
+    await prefs.setString('serial', serial ?? "No disponible");
+    await prefs.setString('tipo', tipo ?? "No disponible");
+
+    // Mostrar el diálogo con los datos
     showDialog(
       context: context,
       builder: (context) {
@@ -158,14 +166,17 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                // Lógica para navegar a la siguiente pantalla
+                Navigator.pushNamed(context, '/siguientePantalla');
               },
-              child: const Text('Cerrar'),
+              child: const Text('Continuar'),
             ),
           ],
         );
       },
     );
   }
+
 
   /// Muestra un diálogo de error si falla el procesamiento del QR
   void _mostrarDialogoError() {

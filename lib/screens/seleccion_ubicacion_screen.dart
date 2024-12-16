@@ -4,6 +4,8 @@ import 'package:transfer_app/screens/registro_usuario_screen.dart';
 import 'package:transfer_app/screens/representante_legal_screen.dart';
 
 class SeleccionUbicacionScreen extends StatefulWidget {
+  final String clave;
+  SeleccionUbicacionScreen({required this.clave});
   @override
   _SeleccionUbicacionScreenState createState() =>
       _SeleccionUbicacionScreenState();
@@ -154,7 +156,12 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RegistroUsuarioScreen()),
+                    builder: (context) => RegistroUsuarioScreen(
+                      clave: widget.clave,
+                      region: selectedRegion!,
+                      comuna: selectedComuna!,
+                    ),
+                  ),
                 );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(

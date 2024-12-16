@@ -83,7 +83,16 @@ class _EscanerCarnetScreenState extends State<EscanerCarnetScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RegistroUsuarioScreen()),
+                MaterialPageRoute(
+                  builder: (context) => RegistroUsuarioScreen(
+                    //clave: widget.clave,
+                    //region: selectedRegion!,
+                    //comuna: selectedComuna!,
+                    clave: "",
+                    region: "",
+                    comuna: "",
+                  ),
+                ),
               );
             },
             style: ElevatedButton.styleFrom(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/comprador_screen.dart';
+import 'package:transfer_app/screens/crear_clave_ingreso_screen.dart';
 import 'package:transfer_app/screens/instituciones_estado_screen.dart';
 import 'package:transfer_app/screens/propietario_screen.dart';
 import 'package:transfer_app/screens/terminos_condiciones_screen.dart';
@@ -96,11 +97,13 @@ class TransferenciaPPUScreen extends StatelessWidget {
                       SizedBox(height: 16),
                       _buildButton(context, 'E-RUT', ERutScannerScreen()),
                       SizedBox(height: 16),
-                      _buildButton(context, 'E-RUT', CompradorScreen()),
+                      _buildButton(context, '(eliminar) Comprador', CompradorScreen()),
                       SizedBox(height: 16),
-                      _buildButton(context, 'E-RUT', PropietarioScreen()),
+                      _buildButton(context, '(eliminar) Propietario', PropietarioScreen()),
                       SizedBox(height: 16),
-                      _buildButton(context, 'E-RUT', InstitucionesEstadoScreen()),
+                      _buildButton(context, '(eliminar) Instituciones', InstitucionesEstadoScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, '(eliminar) crear clave', CrearClaveIngresoScreen()),
                       SizedBox(height: 30),
                       _buildTextButton(context, 'TÉRMINOS Y CONDICIONES'),
                       SizedBox(height: 8),
