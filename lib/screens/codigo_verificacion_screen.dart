@@ -1,8 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:transfer_app/screens/home_screen.dart';
+import 'package:transfer_app/services/clave_remota_service.dart';
 
 class CodigoVerificacionScreen extends StatelessWidget {
+  final String email;
+  final String rut;
+  final String clave;
+  final ClaveRemotaService _usuarioService = ClaveRemotaService(); // Instancia del servicio
+
+  CodigoVerificacionScreen({
+    required this.email,
+    required this.rut,
+    required this.clave,
+  });
+
+  Future<void> _guardarClaveRemota(BuildContext context, String v) async {
+    print("Guardando clave remota...");
+    // Validar que sean iguales las claves
+    if (clave != v) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Las claves no coinciden.")),
+      );
+      return;
+    }
+
+    try {
+      await _usuarioService.actualizarClaveRemota(rut, clave);      
+      // Navega a la nueva pantalla después de confirmar el código
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al guardar la clave remota: $e")),
+      );
+    }
+  }  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +116,8 @@ class CodigoVerificacionScreen extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 enableActiveFill: true,
                 onCompleted: (v) {
+                  _guardarClaveRemota(context, v);
                   print("Código ingresado: $v");
-                  // Navega a la nueva pantalla después de confirmar el código
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
                 },
                 onChanged: (value) {},
               ),

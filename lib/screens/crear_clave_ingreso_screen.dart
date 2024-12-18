@@ -35,7 +35,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
 
             // Campos de entrada para la clave
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              padding: const EdgeInsets.symmetric(horizontal: 45.0),
               child: PinCodeTextField(
                 appContext: context,
                 length: 4,

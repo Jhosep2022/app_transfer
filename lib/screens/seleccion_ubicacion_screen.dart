@@ -14,6 +14,7 @@ class SeleccionUbicacionScreen extends StatefulWidget {
 class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
   String? selectedRegion;
   String? selectedComuna;
+  String? selectedCiudad;
 
   // Lista de regiones y comunas asociadas para Chile
   final Map<String, List<String>> regionComunaMap = {
@@ -153,6 +154,55 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
             onPressed: () {
               // Verifica que ambas opciones estén seleccionadas
               if (selectedRegion != null && selectedComuna != null) {
+                switch (selectedRegion) {
+                  case 'Región de Tarapacá':
+                    selectedCiudad = 'Iquique';
+                    break;
+                  case 'Región de Antofagasta':
+                    selectedCiudad = 'Antofagasta';
+                    break;
+                  case 'Región de Atacama':
+                    selectedCiudad = 'Copiapó';
+                    break;
+                  case 'Región de Coquimbo':
+                    selectedCiudad = 'La Serena';
+                    break;
+                  case 'Región de Valparaíso':
+                    selectedCiudad = 'Valparaíso';
+                    break;
+                  case 'Región Metropolitana de Santiago':
+                    selectedCiudad = 'Santiago';
+                    break;
+                  case 'Región de O’Higgins':
+                    selectedCiudad = 'Rancagua';
+                    break;
+                  case 'Región del Maule':
+                    selectedCiudad = 'Talca';
+                    break;
+                  case 'Región de Ñuble':
+                    selectedCiudad = 'Chillán';
+                    break;
+                  case 'Región del Biobío':
+                    selectedCiudad = 'Concepción';
+                    break;
+                  case 'Región de La Araucanía':
+                    selectedCiudad = 'Temuco';
+                    break;
+                  case 'Región de Los Ríos':
+                    selectedCiudad = 'Valdivia';
+                    break;
+                  case 'Región de Los Lagos':
+                    selectedCiudad = 'Puerto Montt';
+                    break;
+                  case 'Región de Aysén':
+                    selectedCiudad = 'Coyhaique';
+                    break;
+                  case 'Región de Magallanes y la Antártica Chilena':
+                    selectedCiudad = 'Punta Arenas';
+                    break;
+                  default:
+                    selectedCiudad = 'Santiago';
+                }
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -160,6 +210,7 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
                       clave: widget.clave,
                       region: selectedRegion!,
                       comuna: selectedComuna!,
+                      ciudad: selectedCiudad!,
                     ),
                   ),
                 );

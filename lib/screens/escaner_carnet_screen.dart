@@ -91,6 +91,7 @@ class _EscanerCarnetScreenState extends State<EscanerCarnetScreen> {
                     clave: "",
                     region: "",
                     comuna: "",
+                    ciudad: "",
                   ),
                 ),
               );

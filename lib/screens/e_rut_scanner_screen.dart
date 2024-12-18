@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../services/vehiculos_service.dart';
 import 'crear_clave_ingreso_screen.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ERutScannerScreen extends StatefulWidget {
   @override
@@ -123,8 +124,10 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
       final Map<String, dynamic> qrDataDecoded = json.decode(qrData);
       final String rut = qrDataDecoded['rut'] ?? '';
       final String dv = qrDataDecoded['dv'] ?? '';
+      final String rutEscaneado = '$rut-$dv';
       final String serie = qrDataDecoded['serie'] ?? '';
       final String razonSocial = qrDataDecoded['razonSocial'] ?? '';
+      final String direccionScanned = qrDataDecoded['direccion'] ?? '';
 
       if (rut.isEmpty || dv.isEmpty || serie.isEmpty || razonSocial.isEmpty) {
         setState(() {
@@ -139,9 +142,14 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
 
       final result = await _vehiculosService.verificaRut(rut);
       if (result != null && result['activo'] == 'true') {
-        await _saveToLocalStorage(rut, serie, razonSocial, result['verificado'] ?? '');
+        await _saveToLocalStorage(rutEscaneado, rut, serie, direccionScanned, razonSocial, result['verificado'] ?? '');
         setState(() {
           resultMessage = 'E-RUT Verificado y Guardado Localmente.';
+          controller?.stopCamera();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+          );
         });
       } else {
         setState(() {
@@ -188,10 +196,24 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
     );
   }
 
-  Future<void> _saveToLocalStorage(String rut, String serie, String razonSocial, String verificado) async {
+  Future<void> _saveToLocalStorage(String rutScanned, String rut, String serie, String direccion, String razonSocial, String verificado) async {
     await secureStorage.write(key: 'rut', value: rut);
     await secureStorage.write(key: 'serie', value: serie);
     await secureStorage.write(key: 'razonSocial', value: razonSocial);
     await secureStorage.write(key: 'verificado', value: verificado);
+
+    
+    // Guardar los datos en SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('rut', rutScanned ?? "No disponible");
+    await prefs.setString('rutRepre', rutScanned ?? "No disponible");
+    await prefs.setString('serial', serie ?? "No disponible");
+    await prefs.setString('tipo', "2" ?? "No disponible");
+    await prefs.setString('direccion', direccion ?? "No disponible");
+    await prefs.setString('razonSocial', razonSocial ?? "No disponible");
+    await prefs.setString('contador', "4");
+    await prefs.setString('monedavende', r"$");
+    await prefs.setString('vendeenviadatos', "");
+    await prefs.setString('primero', "");
   }
 }

@@ -1,19 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
-
+import 'package:transfer_app/services/infor6_crea6_service.dart';
+import 'dart:math'; // Para generar números aleatorios
+import 'package:intl/intl.dart'; // Para formatear la hora
 import 'codigo_verificacion_screen.dart';
 
 class ConfirmarCorreoScreen extends StatelessWidget {
   final String email;
+  final String rut;
+  final Infor6Crea6Service _usuarioService = Infor6Crea6Service(); // Instancia del servicio
 
-  ConfirmarCorreoScreen({required this.email});
+  ConfirmarCorreoScreen({
+    required this.email,
+    required this.rut,
+    });
+
+  // Método para generar los parámetros (similar al código proporcionado)
+  Future<void> _enviarClave(BuildContext context) async {
+    String rutCliente = rut;
+    int numeroClave = _generarNro(); // Número aleatorio
+    String horaVerificacion = _obtenerHoraActual();
+
+    print("Parámetros generados:");
+    print("RUT: $rutCliente");
+    print("Clave: $numeroClave");
+    print("Hora: $horaVerificacion");
+
+    // Llamar al servicio para almacenar la clave
+    bool resultado = await _usuarioService.almacenarClave(
+      rutCliente,
+      numeroClave,
+      horaVerificacion,
+    );
+
+    if (resultado) {
+      print("Clave almacenada con éxito.");
+      _enviarCorreo(context, numeroClave.toString());
+    } else {
+      print("Error al almacenar la clave.");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al confirmar el correo. Inténtalo de nuevo.")),
+      );
+    }
+  }
+
+  // Método para ir a la pantalla de confirmación
+  Future<void> _irConfirmacion(BuildContext context, String numClave) async {
+    try {
+      await _usuarioService.enviarCorreoConfirmacion(rut);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CodigoVerificacionScreen(
+          email: email,
+          rut: rut,
+          clave: numClave,
+        )),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al confirmar el correo: $e")),
+      );
+    }
+  }
+
+  // Método para enviar correo de confirmación
+  Future<void> _enviarCorreo(BuildContext context, String numClave) async {
+    try {
+      await _usuarioService.enviarCorreoConfirmacion(rut);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Region guardada exitosamente.")),
+      );
+      _irConfirmacion(context, numClave);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al guardar el usuario: $e")),
+      );
+    }
+  }
+
+  // Método para generar un número aleatorio
+  int _generarNro() {
+    return Random().nextInt(1000001); // Número aleatorio entre 0 y 1000000
+  }
+
+  // Método para obtener la hora actual
+  String _obtenerHoraActual() {
+    DateTime now = DateTime.now();
+    return DateFormat('h:mm:ss').format(now).trim();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          // Cabecera curvada con diseño similar al HomeScreen
+          // Cabecera curvada con diseño
           Stack(
             children: [
               ClipPath(
@@ -45,7 +126,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
           ),
           SizedBox(height: 40),
 
-          // Icono y texto de confirmación
+          // Icono y texto
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -88,63 +169,29 @@ class ConfirmarCorreoScreen extends StatelessWidget {
           ),
           Spacer(),
 
-          // Botones de Confirmación
+          // Botón de Confirmación
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity, // Hace que el botón ocupe todo el ancho disponible
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Acción al confirmar el correo
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CodigoVerificacionScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      'CONFIRMO',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => _enviarClave(context), // Llamada al servicio
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity, // Hace que el botón ocupe todo el ancho disponible
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Acción si el correo no es correcto
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      'NO ES MI CORREO',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                child: Text(
+                  'CONFIRMO',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-              ],
+              ),
             ),
           ),
           SizedBox(height: 40),

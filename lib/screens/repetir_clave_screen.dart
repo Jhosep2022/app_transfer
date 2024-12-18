@@ -4,8 +4,20 @@ import 'package:transfer_app/screens/crear_clave_ingreso_screen.dart';
 import '../components/inverted_header_clipper.dart';
 import 'seleccion_ubicacion_screen.dart';
 
-class RepetirClaveScreen extends StatelessWidget {
-  late final String clave;
+class RepetirClaveScreen extends StatefulWidget {
+  @override
+  _RepetirClaveScreenState createState() => _RepetirClaveScreenState();
+}
+
+class _RepetirClaveScreenState extends State<RepetirClaveScreen> {
+  final TextEditingController _pinController = TextEditingController();
+
+  @override
+  void dispose() {
+    _pinController.dispose(); // Liberar recursos del controlador
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +74,7 @@ class RepetirClaveScreen extends StatelessWidget {
             child: PinCodeTextField(
               appContext: context,
               length: 4,
+              controller: _pinController, // Asocia el controlador al campo
               obscureText: true,
               animationType: AnimationType.fade,
               pinTheme: PinTheme(
@@ -88,7 +101,7 @@ class RepetirClaveScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  // Muestra un mensaje de error
+                  _pinController.clear(); // Limpia el controlador
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
