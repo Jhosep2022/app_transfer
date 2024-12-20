@@ -35,7 +35,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
 
             // Campos de entrada para la clave
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 45.0),
+              padding: const EdgeInsets.symmetric(horizontal: 90.0), // Reduce el padding horizontal
               child: PinCodeTextField(
                 appContext: context,
                 length: 4,
@@ -45,7 +45,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
                   shape: PinCodeFieldShape.box,
                   borderRadius: BorderRadius.circular(5),
                   fieldHeight: 50,
-                  fieldWidth: 40,
+                  fieldWidth: 35, // Reduce el ancho para juntar los campos
                   activeFillColor: Colors.white,
                   selectedFillColor: Colors.teal.shade100,
                   inactiveFillColor: Colors.white,
@@ -67,6 +67,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
                 onChanged: (value) {},
               ),
             ),
+
             SizedBox(height: 40),
 
             // Instrucciones

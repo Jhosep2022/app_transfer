@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:transfer_app/screens/crear_clave_ingreso_screen.dart';
 import '../components/inverted_header_clipper.dart';
 import 'seleccion_ubicacion_screen.dart';
+import 'crear_clave_ingreso_screen.dart';
 
 class RepetirClaveScreen extends StatefulWidget {
   @override
@@ -70,7 +70,7 @@ class _RepetirClaveScreenState extends State<RepetirClaveScreen> {
 
           // Campo de entrada para repetir la clave
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60.0),
+            padding: const EdgeInsets.symmetric(horizontal: 95.0),
             child: PinCodeTextField(
               appContext: context,
               length: 4,
@@ -92,7 +92,7 @@ class _RepetirClaveScreenState extends State<RepetirClaveScreen> {
               animationDuration: Duration(milliseconds: 300),
               backgroundColor: Colors.transparent,
               enableActiveFill: true,
-              onCompleted: (v) {
+              onCompleted: (v) async {
                 if (v == CrearClaveIngresoScreen.claveNotifier.value) {
                   Navigator.push(
                     context,
@@ -102,18 +102,26 @@ class _RepetirClaveScreenState extends State<RepetirClaveScreen> {
                   );
                 } else {
                   _pinController.clear(); // Limpia el controlador
-                  showDialog(
+                  await showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text("Error"),
-                      content: Text("Las claves no coinciden. Inténtalo de nuevo."),
+                      content: Text("Las claves no coinciden. Serás redirigido a la pantalla anterior."),
                       actions: [
                         TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: Text("OK"),
                         ),
                       ],
                     ),
+                  );
+                  // Redirigir a la pantalla anterior
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+                    (route) => false,
                   );
                 }
               },

@@ -65,7 +65,7 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                       color: Colors.teal,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
 
                   // Título y subtítulo
                   Text(
@@ -108,10 +108,9 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                       animationDuration: Duration(milliseconds: 300),
                       backgroundColor: Colors.transparent,
                       enableActiveFill: true,
-                      onCompleted: (v) {
+                      onCompleted: (v) async {
                         print("Clave repetida en RepiteClaveScreen: $v"); // Depuración
-                        print(
-                            "Clave esperada en CrearClaveScreen: ${CrearClaveScreen.claveEliPassNotifier.value}"); // Depuración
+                        print("Clave esperada en CrearClaveScreen: ${CrearClaveScreen.claveEliPassNotifier.value}"); // Depuración
 
                         if (v == CrearClaveScreen.claveEliPassNotifier.value) {
                           Navigator.push(
@@ -125,21 +124,25 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                           );
                         } else {
                           _pinController.clear(); // Limpia el controlador
-                          // Muestra un mensaje de error
-                          showDialog(
+                          // Mostrar el mensaje de error y redirigir
+                          await showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
                               title: Text("Error"),
-                              content: Text("Las claves no coinciden. Inténtalo de nuevo."),
+                              content: Text("Las claves no coinciden. Serás redirigido para crear la clave nuevamente."),
                               actions: [
                                 TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
+                                  onPressed: () => Navigator.pop(context),
                                   child: Text("OK"),
                                 ),
                               ],
                             ),
+                          );
+                          // Redirigir a la pantalla CrearClaveScreen
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => CrearClaveScreen()),
+                            (route) => false,
                           );
                         }
                       },

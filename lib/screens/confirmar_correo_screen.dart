@@ -18,7 +18,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
   // Método para generar los parámetros (similar al código proporcionado)
   Future<void> _enviarClave(BuildContext context) async {
     String rutCliente = rut;
-    int numeroClave = _generarNro(); // Número aleatorio
+    int numeroClave = _generarNumero(); // Número aleatorio
     String horaVerificacion = _obtenerHoraActual();
 
     print("Parámetros generados:");
@@ -79,8 +79,8 @@ class ConfirmarCorreoScreen extends StatelessWidget {
   }
 
   // Método para generar un número aleatorio
-  int _generarNro() {
-    return Random().nextInt(1000001); // Número aleatorio entre 0 y 1000000
+  int _generarNumero() {
+    return 100000 + Random().nextInt(900000); // Número aleatorio de 6 dígitos
   }
 
   // Método para obtener la hora actual

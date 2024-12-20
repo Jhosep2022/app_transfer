@@ -46,8 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Cierra el diálogo
-              // Opcional: Reintentar la conexión después de cerrar el alert
+              Navigator.of(context).pop(); 
             },
             child: const Text('Aceptar'),
           ),
@@ -74,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(height: 20.h),
                 Lottie.asset(
                   'assets/stationwagon.json',
-                  width: 300.w,
+                  width: 250.w,
                   height: 200.h,
                   fit: BoxFit.contain,
                 ),
