@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
+import 'package:transfer_app/screens/home_screen.dart';
 import 'package:transfer_app/screens/transferencia_ppu_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UbicacionScreen extends StatefulWidget {
   @override
@@ -11,6 +15,25 @@ class UbicacionScreen extends StatefulWidget {
 }
 
 class _UbicacionScreenState extends State<UbicacionScreen> {
+  String numeroSerie = "";
+  String rut = "";
+  String tipo = "";
+  String latitud = "";
+  String longitud = "";
+
+  // Método para cargar datos desde SharedPreferences
+  Future<void> _cargarDatosSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      numeroSerie = prefs.getString('serial') ?? "";
+      rut = prefs.getString('rut') ?? "";
+      tipo = prefs.getString('tipo') ?? "";
+      latitud = prefs.getString('latitud') ?? "";
+      longitud = prefs.getString('longitud') ?? "";
+    });
+  }
+
   bool _isLoading = true;
   String _locationMessage = "Estamos buscando tu ubicación...";
   Position? _currentPosition;
@@ -22,6 +45,7 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
   void initState() {
     super.initState();
     _checkPermissionsAndLocate();
+    _cargarDatosSharedPreferences();
   }
 
   Future<void> _checkPermissionsAndLocate() async {
@@ -65,10 +89,17 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
     // Espera de 2 segundos antes de redirigir
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted && _isMapRendered) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
-        );
+        if(rut != "" || rut == "No disponible"){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
+          );
+        }else{
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        }
       }
     });
   }

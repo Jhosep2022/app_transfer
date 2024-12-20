@@ -3,6 +3,7 @@ import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/clave_screen.dart';
 import 'package:transfer_app/screens/comprador_screen.dart';
 import 'package:transfer_app/screens/instituciones_estado_screen.dart';
+import 'package:transfer_app/screens/transferencia_ppu_screen.dart';
 import 'package:transfer_app/screens/verificar_ppu_screen.dart';
 
 import 'mi_ubicacion_home_screen.dart'; // Importa tu pantalla de InstitucionesEstadoScreen
@@ -81,6 +82,7 @@ class HomeScreen extends StatelessWidget {
                       _buildActionButton(context, 'Propietario', Icons.person),
                       _buildActionButton(context, 'Comprador', Icons.shopping_cart),
                       _buildActionButton(context, 'Mi ubicacion', Icons.location_on),
+                      _buildActionButton(context, 'Cerrar sesion', Icons.logout),
                     ],
                   ),
                   SizedBox(height: 16),
@@ -149,6 +151,13 @@ class HomeScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MiUbicacionHomeScreen()),
+          );
+        }        
+        if (title == 'Cerrar sesion') {
+          // Navegar a CompradorScreen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
           );
         }
         // Puedes agregar más pantallas según el título
