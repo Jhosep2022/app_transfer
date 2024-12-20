@@ -139,10 +139,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
 
       // Mostrar en un diálogo los datos extraídos
       _mostrarDialogoDatosQR(rut, dv, serie, razonSocial);
-
-      final result = await _vehiculosService.verificaRut(rut);
-      if (result != null && result['activo'] == 'true') {
-        await _saveToLocalStorage(rutEscaneado, rut, serie, direccionScanned, razonSocial, result['verificado'] ?? '');
+      await _saveToLocalStorage(rutEscaneado, rut, serie, direccionScanned, razonSocial);
         setState(() {
           resultMessage = 'E-RUT Verificado y Guardado Localmente.';
           controller?.stopCamera();
@@ -151,11 +148,8 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
             MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
           );
         });
-      } else {
-        setState(() {
-          resultMessage = 'E-RUT no verificado.';
-        });
-      }
+
+      final result = await _vehiculosService.verificaRut(rut);
     } catch (e) {
       setState(() {
         resultMessage = 'Error al procesar el QR.';
@@ -196,11 +190,11 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
     );
   }
 
-  Future<void> _saveToLocalStorage(String rutScanned, String rut, String serie, String direccion, String razonSocial, String verificado) async {
+  Future<void> _saveToLocalStorage(String rutScanned, String rut, String serie, String direccion, String razonSocial) async {
     await secureStorage.write(key: 'rut', value: rut);
     await secureStorage.write(key: 'serie', value: serie);
     await secureStorage.write(key: 'razonSocial', value: razonSocial);
-    await secureStorage.write(key: 'verificado', value: verificado);
+    //await secureStorage.write(key: 'verificado', value: verificado);
 
     
     // Guardar los datos en SharedPreferences
