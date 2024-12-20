@@ -88,6 +88,17 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
     return paramsn;
   }
 
+  Future<void> _saveToLocalStorage() async {
+    // Guardar los datos en SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('correo_usuario', _correoController.text ?? "No disponible");
+    await prefs.setString('region', widget.region ?? "No disponible");
+    await prefs.setString('ciudad', widget.ciudad ?? "No disponible");
+    await prefs.setString('comuna', widget.comuna ?? "No disponible");
+    await prefs.setString('clave_local', _claveController.text ?? "No disponible");
+  }
+
+
   // Método para cargar datos desde SharedPreferences
   Future<void> _cargarDatosSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -228,8 +239,9 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
     // Si todas las validaciones pasan
     try {
       await widget._usuarioService.enviarCorreoOperador(rut);
+      _saveToLocalStorage();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Region guardada exitosamente.")),
+        SnackBar(content: Text("Correo enviado exitosamente.")),
       );
       Navigator.push(
         context,
@@ -237,7 +249,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error al guardar el usuario: $e")),
+        SnackBar(content: Text("Error al enviar correo: $e")),
       );
     }
   }

@@ -13,6 +13,10 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
   final TextEditingController _pinController = TextEditingController();
   String correoUsuario = ""; // Variable para almacenar el correo
   String rut = ""; // Variable para almacenar el RUT
+  String region = ""; // Variable para almacenar la región
+  String ciudad = ""; // Variable para almacenar la ciudad
+  String comuna = ""; // Variable para almacenar la comuna
+  String claveLocal = ""; // Variable para almacenar la clave local
 
   @override
   void initState() {
@@ -25,6 +29,10 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
     setState(() {
       correoUsuario = prefs.getString('correo_usuario') ?? "No disponible";
       rut = prefs.getString('rut') ?? "No disponible";
+      region = prefs.getString('region') ?? "No disponible";
+      ciudad = prefs.getString('ciudad') ?? "No disponible";
+      comuna = prefs.getString('comuna') ?? "No disponible";
+      claveLocal = prefs.getString('clave_local') ?? "No disponible";
     });
   }
 
@@ -119,6 +127,10 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                               builder: (context) => ConfirmarCorreoScreen(
                                 email: correoUsuario, // Usa el correo recuperado
                                 rut: rut, // Usa el rut recuperado
+                                region: region, // Usa la región recuperada
+                                ciudad: ciudad, // Usa la ciudad recuperada
+                                comuna: comuna, // Usa la comuna recuperada
+                                claveLocal: claveLocal, // Usa la clave local recuperada
                               ),
                             ),
                           );

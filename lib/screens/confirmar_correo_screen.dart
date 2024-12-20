@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
+import 'package:transfer_app/screens/registro_usuario_screen.dart';
 import 'package:transfer_app/services/infor6_crea6_service.dart';
 import 'dart:math'; // Para generar números aleatorios
 import 'package:intl/intl.dart'; // Para formatear la hora
@@ -8,11 +9,19 @@ import 'codigo_verificacion_screen.dart';
 class ConfirmarCorreoScreen extends StatelessWidget {
   final String email;
   final String rut;
+  final String region;
+  final String ciudad;
+  final String comuna;
+  final String claveLocal;
   final Infor6Crea6Service _usuarioService = Infor6Crea6Service(); // Instancia del servicio
 
   ConfirmarCorreoScreen({
     required this.email,
     required this.rut,
+    required this.region,
+    required this.ciudad,
+    required this.comuna,
+    required this.claveLocal,
     });
 
   // Método para generar los parámetros (similar al código proporcionado)
@@ -185,6 +194,42 @@ class ConfirmarCorreoScreen extends StatelessWidget {
                 ),
                 child: Text(
                   'CONFIRMO',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Botón de Confirmación
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegistroUsuarioScreen(
+                      clave: claveLocal,
+                      region: region,
+                      comuna: comuna,
+                      ciudad: ciudad,
+                    )),
+                  ),
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  '¿No es tu correo? Volver a ingresar',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
