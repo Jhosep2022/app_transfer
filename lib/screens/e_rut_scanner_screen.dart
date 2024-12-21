@@ -82,11 +82,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
                   ),
                 ElevatedButton(
                   onPressed: () {
-                    controller?.stopCamera();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
-                    );
+                    _navigateToCrearClaveIngresoScreen();
                   },
                   child: const Text('Volver'),
                 ),
@@ -106,10 +102,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
         qrText = scanData.code!;
       });
 
-      // Mostrar el contenido del QR escaneado en la consola
       print("Contenido del QR: $qrText");
-
-      // Procesar el contenido del QR
       _processQR(qrText);
     });
   }
@@ -120,7 +113,6 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
     });
 
     try {
-      // Decodificar el contenido del QR
       final Map<String, dynamic> qrDataDecoded = json.decode(qrData);
       final String rut = qrDataDecoded['rut'] ?? '';
       final String dv = qrDataDecoded['dv'] ?? '';
@@ -137,19 +129,13 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
         return;
       }
 
-      // Mostrar en un diálogo los datos extraídos
       _mostrarDialogoDatosQR(rut, dv, serie, razonSocial);
       await _saveToLocalStorage(rutEscaneado, rut, serie, direccionScanned, razonSocial);
-        setState(() {
-          resultMessage = 'E-RUT Verificado y Guardado Localmente.';
-          controller?.stopCamera();
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
-          );
-        });
+      setState(() {
+        resultMessage = 'E-RUT Verificado y Guardado Localmente.';
+      });
 
-      final result = await _vehiculosService.verificaRut(rut);
+      _navigateToCrearClaveIngresoScreen();
     } catch (e) {
       setState(() {
         resultMessage = 'Error al procesar el QR.';
@@ -158,8 +144,16 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
       setState(() {
         isLoading = false;
       });
-      controller?.resumeCamera();
     }
+  }
+
+  void _navigateToCrearClaveIngresoScreen() {
+    controller?.stopCamera();
+    controller?.dispose(); // Detener y liberar la cámara
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+    );
   }
 
   void _mostrarDialogoDatosQR(String rut, String dv, String serie, String razonSocial) {
@@ -180,7 +174,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                controller?.resumeCamera(); // Reanudar la cámara después de cerrar el diálogo
+                controller?.resumeCamera();
               },
               child: const Text('Cerrar'),
             ),
@@ -194,17 +188,13 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
     await secureStorage.write(key: 'rut', value: rut);
     await secureStorage.write(key: 'serie', value: serie);
     await secureStorage.write(key: 'razonSocial', value: razonSocial);
-    //await secureStorage.write(key: 'verificado', value: verificado);
 
-    
-    // Guardar los datos en SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('rut', rutScanned ?? "No disponible");
-    await prefs.setString('rutRepre', rutScanned ?? "No disponible");
-    await prefs.setString('serial', serie ?? "No disponible");
-    await prefs.setString('tipo', "2" ?? "No disponible");
-    await prefs.setString('direccion', direccion ?? "No disponible");
-    await prefs.setString('razonSocial', razonSocial ?? "No disponible");
+    await prefs.setString('rut', rutScanned);
+    await prefs.setString('serial', serie);
+    await prefs.setString('tipo', "2");
+    await prefs.setString('direccion', direccion);
+    await prefs.setString('razonSocial', razonSocial);
     await prefs.setString('contador', "4");
     await prefs.setString('monedavende', r"$");
     await prefs.setString('vendeenviadatos', "");

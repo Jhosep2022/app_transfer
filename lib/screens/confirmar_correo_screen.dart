@@ -203,7 +203,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
               ),
             ),
           ),
-
+          SizedBox(height: 10),
           // Botón de Confirmación
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -229,7 +229,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '¿No es tu correo? Volver a ingresar',
+                  '¿No es tu correo?',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
