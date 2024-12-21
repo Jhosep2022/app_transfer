@@ -45,6 +45,18 @@ class _CompradorScreenState extends State<CompradorScreen> {
 
   String regionLocal = '';
 
+  Future<void> saveData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('vin', vinCivil);
+    await prefs.setString('nro_motor', motorCivil);
+    await prefs.setString('chasis', chasisCivil);
+    await prefs.setString('tipo_automovil', tipoCivil);
+    await prefs.setString('anio_automovil', anuCivil);
+    await prefs.setString('marca_automovil', marcaCivil);
+    await prefs.setString('modelo', modeloCivil);
+    await prefs.setString('color', colorCivil);
+  }
+
   Future<void> _cargarDatosPref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -382,7 +394,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
 
   Widget _buildContinueButton() {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         if(_selectedRegion != regionLocal){
           buildDialog(context, 'Región Incorrecta', 'La región seleccionada no coincide con la región de su residencia. Por favor, verifique los datos ingresados.');
         }
@@ -393,10 +405,11 @@ class _CompradorScreenState extends State<CompradorScreen> {
           buildDialog(context, 'Vehículo Perdido', 'El vehículo que intenta comprar se encuentra en la lista de vehículos perdidos. Por favor, contacte a las autoridades.'); 
         }
         if(vendeAutomovil == "Sí"){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DatosLegalesCompradorScreen()),
-            );
+          await saveData();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DatosLegalesCompradorScreen()),
+          );
         }
         if(_chasisCivilController != _chasisCivilRepeatController && chasisCivil != _chasisCivilRepeatController.text){
           buildDialog(context, 'Chasis Incorrecto', 'El número de chasis ingresado no coincide. Por favor, verifique los datos ingresados.');

@@ -48,6 +48,18 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
       rutComprador = prefs.getString('rut') ?? "No disponible";
     });
   }
+  
+  Future<void> saveData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('vin', vinCivil ?? '');
+    await prefs.setString('nro_motor', motorCivil ?? '');
+    await prefs.setString('chasis', chasisCivil ?? '');
+    await prefs.setString('tipo_automovil', tipoCivil ?? '');
+    await prefs.setString('anio_automovil', anuCivil ?? '');
+    await prefs.setString('marca_automovil', marcaCivil ?? '');
+    await prefs.setString('modelo', modeloCivil ?? '');
+    await prefs.setString('color', colorCivil ?? '');
+  }
 
   @override
   void initState() {
@@ -457,6 +469,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
         } else if (label == 'CONTINUAR' && tipoAutomovil != null) {
           // Continuar a la siguiente pantalla
           if(vendeAutomovil == "Sí"){
+            await saveData();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),

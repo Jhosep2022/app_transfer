@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
+import 'package:transfer_app/screens/crear_clave_ingreso_screen.dart';
 
 class CedulaScannerScreen extends StatefulWidget {
   @override
@@ -144,8 +145,8 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
   void _mostrarDialogoDatos(String? run, String? serial, String? tipo) async {
     // Guardar los datos en SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('run', run ?? "No disponible");
-    await prefs.setString('serial', serial ?? "No disponible");
+    await prefs.setString('rut', run ?? "No disponible");
+    await prefs.setString('serie', serial ?? "No disponible");
     await prefs.setString('tipo', tipo ?? "No disponible");
 
     // Mostrar el diálogo con los datos
@@ -166,8 +167,10 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                // Lógica para navegar a la siguiente pantalla
-                Navigator.pushNamed(context, '/siguientePantalla');
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+                );
               },
               child: const Text('Continuar'),
             ),
