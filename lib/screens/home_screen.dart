@@ -9,7 +9,9 @@ import 'package:transfer_app/screens/instituciones_estado_screen.dart';
 import 'package:transfer_app/screens/splash_screen.dart';
 import 'package:transfer_app/screens/transferencia_ppu_screen.dart';
 import 'package:transfer_app/screens/verificar_ppu_screen.dart';
+import 'package:geolocator/geolocator.dart';
 
+import '../services/location_service.dart';
 import 'mi_ubicacion_home_screen.dart';
 import 'ubicacion_screen.dart'; // Pantalla de destino para Ubicación
 
@@ -19,9 +21,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final LocationService _locationService = LocationService();
+  late StreamSubscription<bool> _locationSubscription;
+
   @override
   void initState() {
     super.initState();
+    _locationSubscription =
+        _locationService.locationStream.listen((isLocationEnabled) {
+      if (!isLocationEnabled) {
+        _showLocationAlert();
+      }
+    });
+
     Timer(Duration(seconds: 5), () async {
       bool hasInternet = await _checkInternetConnection();
       if (hasInternet) {
@@ -42,6 +54,27 @@ class _HomeScreenState extends State<HomeScreen> {
       return false; // Sin conexión
     }
     return true; // Con conexión
+  }
+
+  void _showLocationAlert() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text("Ubicación Desactivada"),
+        content: Text(
+            "Debes activar la ubicación para continuar usando la aplicación."),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              Navigator.of(context).pop(); // Cierra la alerta.
+              await Geolocator.openLocationSettings();
+            },
+            child: Text("Abrir Configuración"),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showNoInternetDialog() {
@@ -65,6 +98,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _locationSubscription.cancel();
+    _locationService.dispose();
+    super.dispose();
   }
 
   @override
