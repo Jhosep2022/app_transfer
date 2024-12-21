@@ -1,15 +1,72 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity_plus/connectivity_plus.dart'; // Necesario para verificar conexión
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/clave_screen.dart';
 import 'package:transfer_app/screens/comprador_screen.dart';
 import 'package:transfer_app/screens/instituciones_estado_screen.dart';
+import 'package:transfer_app/screens/splash_screen.dart';
 import 'package:transfer_app/screens/transferencia_ppu_screen.dart';
 import 'package:transfer_app/screens/verificar_ppu_screen.dart';
 
-import 'mi_ubicacion_home_screen.dart'; // Importa tu pantalla de InstitucionesEstadoScreen
+import 'mi_ubicacion_home_screen.dart';
+import 'ubicacion_screen.dart'; // Pantalla de destino para Ubicación
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 5), () async {
+      bool hasInternet = await _checkInternetConnection();
+      if (hasInternet) {
+        // Si hay conexión a internet, navega a la siguiente pantalla
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => UbicacionScreen()),
+        );
+      } else {
+        // Si no hay conexión, muestra un alert
+        _showNoInternetDialog();
+      }
+    });
+  }
+
+  Future<bool> _checkInternetConnection() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      return false; // Sin conexión
+    }
+    return true; // Con conexión
+  }
+
+  void _showNoInternetDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error de conexión'),
+        content: const Text(
+            'No tienes conexión a internet. Verifica tu conexión e inténtalo de nuevo.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              // Si hay conexión a internet, navega a la siguiente pantalla
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => SplashScreen()),
+              );
+            },
+            child: const Text('Aceptar'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,40 +93,44 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(Icons.arrow_back, color: Colors.white),
-                                GestureDetector(
+                              GestureDetector(
                                 onTap: () {
                                   showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                    title: Text('Cerrar sesión'),
-                                    content: Text('¿Estás seguro de que deseas cerrar sesión?'),
-                                    actions: [
-                                      TextButton(
-                                      child: Text('Cancelar'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      ),
-                                        TextButton(
-                                        child: Text('Aceptar'),
-                                        onPressed: () async {
-                                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                                          await prefs.setString('rut', "No disponible");
-                                          Navigator.of(context).pop();
-                                          Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
-                                        );
-                                        },
-                                        ),
-                                    ],
-                                    );
-                                  },
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Cerrar sesión'),
+                                        content: Text(
+                                            '¿Estás seguro de que deseas cerrar sesión?'),
+                                        actions: [
+                                          TextButton(
+                                            child: Text('Cancelar'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: Text('Aceptar'),
+                                            onPressed: () async {
+                                              SharedPreferences prefs =
+                                                  await SharedPreferences.getInstance();
+                                              await prefs.setString('rut', "No disponible");
+                                              Navigator.of(context).pop();
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        TransferenciaPPUScreen()),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   );
                                 },
                                 child: Icon(Icons.logout, color: Colors.white),
-                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -128,7 +189,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Redirigir a la pantalla de InstitucionesEstadoScreen al hacer clic en "Ver Más"
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => VerificarPPUScreen()),
@@ -144,13 +204,13 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      // Redirigir a la pantalla de InstitucionesEstadoScreen al hacer clic en la tarjeta de promoción
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => InstitucionesEstadoScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => InstitucionesEstadoScreen()),
                       );
                     },
-                    child: _buildPromoCard(), // Tarjeta de promoción
+                    child: _buildPromoCard(),
                   ),
                 ],
               ),
@@ -161,32 +221,27 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Widget para los botones de acción
   Widget _buildActionButton(BuildContext context, String title, IconData icon) {
     return GestureDetector(
       onTap: () {
         if (title == 'Propietario') {
-          // Navegar a ClaveScreen
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => ClaveScreen()),
           );
         }
         if (title == 'Comprador') {
-          // Navegar a CompradorScreen
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CompradorScreen()),
           );
         }
         if (title == 'Mi ubicacion') {
-          // Navegar a CompradorScreen
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MiUbicacionHomeScreen()),
           );
-        }        
-        // Puedes agregar más pantallas según el título
+        }
       },
       child: Column(
         children: [
@@ -205,7 +260,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Widget para la tarjeta de promoción
   Widget _buildPromoCard() {
     return Container(
       padding: EdgeInsets.all(16),
