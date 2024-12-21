@@ -201,7 +201,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('rut', rutScanned ?? "No disponible");
     await prefs.setString('rutRepre', rutScanned ?? "No disponible");
-    await prefs.setString('serial', serie ?? "No disponible");
+    await prefs.setString('serie', serie ?? "No disponible");
     await prefs.setString('tipo', "2" ?? "No disponible");
     await prefs.setString('direccion', direccion ?? "No disponible");
     await prefs.setString('razonSocial', razonSocial ?? "No disponible");
