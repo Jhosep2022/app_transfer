@@ -89,7 +89,7 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
     // Espera de 2 segundos antes de redirigir
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted && _isMapRendered) {
-        if(rut != "" || rut == "No disponible"){
+        if(rut == "" || rut == "No disponible"){
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),

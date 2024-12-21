@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/clave_screen.dart';
 import 'package:transfer_app/screens/comprador_screen.dart';
@@ -35,7 +36,40 @@ class HomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(Icons.arrow_back, color: Colors.white),
-                              Icon(Icons.settings, color: Colors.white),
+                                GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                    title: Text('Cerrar sesión'),
+                                    content: Text('¿Estás seguro de que deseas cerrar sesión?'),
+                                    actions: [
+                                      TextButton(
+                                      child: Text('Cancelar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      ),
+                                        TextButton(
+                                        child: Text('Aceptar'),
+                                        onPressed: () async {
+                                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                                          await prefs.setString('rut', "No disponible");
+                                          Navigator.of(context).pop();
+                                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
+                                        );
+                                        },
+                                        ),
+                                    ],
+                                    );
+                                  },
+                                  );
+                                },
+                                child: Icon(Icons.logout, color: Colors.white),
+                                ),
                             ],
                           ),
                           SizedBox(height: 20),
@@ -82,7 +116,6 @@ class HomeScreen extends StatelessWidget {
                       _buildActionButton(context, 'Propietario', Icons.person),
                       _buildActionButton(context, 'Comprador', Icons.shopping_cart),
                       _buildActionButton(context, 'Mi ubicacion', Icons.location_on),
-                      _buildActionButton(context, 'Cerrar sesion', Icons.logout),
                     ],
                   ),
                   SizedBox(height: 16),
@@ -153,13 +186,6 @@ class HomeScreen extends StatelessWidget {
             MaterialPageRoute(builder: (context) => MiUbicacionHomeScreen()),
           );
         }        
-        if (title == 'Cerrar sesion') {
-          // Navegar a CompradorScreen
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
-          );
-        }
         // Puedes agregar más pantallas según el título
       },
       child: Column(

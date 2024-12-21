@@ -65,7 +65,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                                 'NOMBRE R. LEGAL Y DATOS',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 24.sp,
+                                  fontSize: 22.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
