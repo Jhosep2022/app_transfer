@@ -147,7 +147,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
     // Validar que _rutController coincide con rut
     if (_rutController.text != serial) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("El RUT ingresado no coincide.")),
+        SnackBar(content: Text("El RUT ingresado no coincide. $serial - ${_rutController.text}")),
       );
       return;
     }
