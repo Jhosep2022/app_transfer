@@ -110,7 +110,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
       tipo = prefs.getString('tipo') ?? "";
       latitud = prefs.getString('latitud') ?? "";
       longitud = prefs.getString('longitud') ?? "";
-      serial = prefs.getString('serial') ?? "";
+      serial = prefs.getString('serie') ?? "";
     });
   }
 

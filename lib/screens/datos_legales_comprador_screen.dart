@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
-
 import 'home_screen.dart';
 
 class DatosLegalesCompradorScreen extends StatelessWidget {
+  final TextEditingController apellidoPaternoController = TextEditingController();
+  final TextEditingController apellidoMaternoController = TextEditingController();
+  final TextEditingController nombresController = TextEditingController();
+  final TextEditingController telefonoController = TextEditingController();
+  final TextEditingController direccionController = TextEditingController();
+  final TextEditingController razonSocialController = TextEditingController();
+  final TextEditingController giroController = TextEditingController();
+
+  Future<void> saveData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('apellidoPaterno', apellidoPaternoController.text);
+    await prefs.setString('apellidoMaterno', apellidoMaternoController.text);
+    await prefs.setString('nombres', nombresController.text);
+    await prefs.setString('telefono', telefonoController.text);
+    await prefs.setString('direccion', direccionController.text);
+    await prefs.setString('razonSocial', razonSocialController.text);
+    await prefs.setString('giro', giroController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812), // Tamaño base del diseño
+      designSize: const Size(375, 812),
       builder: (context, child) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Cabecera curvada
                 Stack(
                   children: [
                     ClipPath(
@@ -62,11 +80,11 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Campos de texto
                       Row(
                         children: [
                           Expanded(
                             child: TextField(
+                              controller: apellidoPaternoController,
                               decoration: InputDecoration(
                                 labelText: 'Apellido Paterno',
                                 labelStyle: TextStyle(fontSize: 14.sp),
@@ -79,6 +97,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                           SizedBox(width: 16.w),
                           Expanded(
                             child: TextField(
+                              controller: apellidoMaternoController,
                               decoration: InputDecoration(
                                 labelText: 'Apellido Materno',
                                 labelStyle: TextStyle(fontSize: 14.sp),
@@ -95,6 +114,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
+                              controller: nombresController,
                               decoration: InputDecoration(
                                 labelText: 'Nombres',
                                 labelStyle: TextStyle(fontSize: 14.sp),
@@ -107,6 +127,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                           SizedBox(width: 16.w),
                           Expanded(
                             child: TextField(
+                              controller: telefonoController,
                               decoration: InputDecoration(
                                 labelText: 'Teléfono',
                                 labelStyle: TextStyle(fontSize: 14.sp),
@@ -121,6 +142,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       TextField(
+                        controller: direccionController,
                         decoration: InputDecoration(
                           labelText: 'Dirección',
                           labelStyle: TextStyle(fontSize: 14.sp),
@@ -131,6 +153,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       TextField(
+                        controller: razonSocialController,
                         decoration: InputDecoration(
                           labelText: 'Razón Social',
                           labelStyle: TextStyle(fontSize: 14.sp),
@@ -141,6 +164,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       TextField(
+                        controller: giroController,
                         decoration: InputDecoration(
                           labelText: 'Giro',
                           labelStyle: TextStyle(fontSize: 14.sp),
@@ -150,19 +174,19 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      // Botón "VER DATOS CONTRATO COMPRA/VENTA"
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await saveData();
                           Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                            context,
+                            MaterialPageRoute(builder: (context) => HomeScreen()),
                           );
                         },
                         child: Text(
                           'VER DATOS CONTRATO COMPRA/VENTA',
                           style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold, // Negrita
+                            fontWeight: FontWeight.bold,
                             fontSize: 12.sp,
                           ),
                         ),
