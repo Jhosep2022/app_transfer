@@ -4,6 +4,7 @@ import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/placa_denegada_screen.dart';
 import 'package:transfer_app/screens/impuesto_municipal_screen.dart';
 import 'package:transfer_app/services/vehiculos_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PropietarioScreen extends StatefulWidget {
   @override
@@ -39,7 +40,20 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
   String? marcaCivil;
   String? colorCivil;
 
-  String _isComprador = "7756527-2";
+  String rutComprador = "";
+
+  Future<void> _cargarDatosPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      rutComprador = prefs.getString('rut') ?? "No disponible";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarDatosPref(); // Cargar el correo desde SharedPreferences
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +161,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                               final vehiculo = await vehiculosService.consultarRegistroInterno(patente);
                               final consultaVechiculo = await vehiculosService.consultarRegistroCivil(patente);
                               if (vehiculo != null && consultaVechiculo != null) {                               
-                                if(_isComprador != consultaVechiculo?.rutCivil){
+                                if(rutComprador != consultaVechiculo?.rutCivil){
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
@@ -412,7 +426,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
   Widget _buildActionButton(String label, BuildContext context) {
   return ElevatedButton(
     onPressed: () async {
-      if(_isComprador == rutCivil){
+      if(rutComprador == rutCivil){
         if (label == 'ACTUALIZAR' && tipoAutomovil != null) {
           final params = {
             'patentecivil': _ppuController.text, // PPU ingresado

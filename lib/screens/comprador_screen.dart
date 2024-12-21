@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/datos_legales_comprador_screen.dart';
 import 'package:transfer_app/screens/impuesto_municipal_screen.dart';
-import 'package:transfer_app/screens/placa_denegada_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transfer_app/services/vehiculos_service.dart'; // Importamos la pantalla de "Placa Denegada"
 
 class CompradorScreen extends StatefulWidget {
@@ -42,6 +42,21 @@ class _CompradorScreenState extends State<CompradorScreen> {
   String modeloCivil = '';
   String marcaCivil = '';
   String colorCivil = '';
+
+  String regionLocal = '';
+
+  Future<void> _cargarDatosPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      regionLocal = prefs.getString('region') ?? "No disponible";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarDatosPref(); // Cargar el correo desde SharedPreferences
+  }
 
   // Lista de regiones de Chile
   final List<String> regiones = [
@@ -368,6 +383,9 @@ class _CompradorScreenState extends State<CompradorScreen> {
   Widget _buildContinueButton() {
     return ElevatedButton(
       onPressed: () {
+        if(_selectedRegion != regionLocal){
+          buildDialog(context, 'Región Incorrecta', 'La región seleccionada no coincide con la región de su residencia. Por favor, verifique los datos ingresados.');
+        }
         if(robadoAutomovil == "Sí"){
           buildDialog(context, 'Vehículo Robado', 'El vehículo que intenta comprar se encuentra en la lista de vehículos robados. Por favor, contacte a las autoridades.');
         }

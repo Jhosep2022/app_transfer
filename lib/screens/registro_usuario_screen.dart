@@ -42,6 +42,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
   String tipo = "";
   String latitud = "";
   String longitud = "";
+  String serial = "";
   
   Map<String, String> getParams() {
     DateTime now = DateTime.now();
@@ -109,6 +110,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
       tipo = prefs.getString('tipo') ?? "";
       latitud = prefs.getString('latitud') ?? "";
       longitud = prefs.getString('longitud') ?? "";
+      serial = prefs.getString('serial') ?? "";
     });
   }
 
@@ -143,7 +145,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
     }
 
     // Validar que _rutController coincide con rut
-    if (_rutController.text != rut) {
+    if (_rutController.text != serial) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("El RUT ingresado no coincide.")),
       );
@@ -318,7 +320,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
                     children: [
                       Expanded(
                           child: _buildTextField(
-                              controller: _rutController, labelText: "Nro Documento Rut/...")),
+                              controller: _rutController, labelText: "Nro Documento Serial/...")),
                       SizedBox(width: 16),
                       Expanded(
                         child: _buildPasswordTextField(
