@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'home_screen.dart';
+import 'identificacion_comprador_screen.dart';
 
 class DatosLegalesCompradorScreen extends StatelessWidget {
   final TextEditingController apellidoPaternoController = TextEditingController();
@@ -179,7 +180,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                           await saveData();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
+                            MaterialPageRoute(builder: (context) => IdentificacionCompradorScreen()),
                           );
                         },
                         child: Text(

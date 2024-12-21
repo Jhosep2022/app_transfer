@@ -7,7 +7,10 @@ import 'package:transfer_app/screens/propietario_screen.dart';
 import 'package:transfer_app/screens/terminos_condiciones_screen.dart';
 import 'package:transfer_app/screens/politica_privacidad_screen.dart';
 import 'package:transfer_app/screens/cedula_scanner_screen.dart'; // Pantalla de escaneo de cédula
-import 'package:transfer_app/screens/e_rut_scanner_screen.dart'; // Pantalla de escaneo de e-rut
+import 'package:transfer_app/screens/e_rut_scanner_screen.dart';
+
+import 'identificacion_comprador_screen.dart';
+import 'identificacion_dueno_screen.dart'; // Pantalla de escaneo de e-rut
 
 class TransferenciaPPUScreen extends StatelessWidget {
   @override
@@ -104,6 +107,10 @@ class TransferenciaPPUScreen extends StatelessWidget {
                       // _buildButton(context, '(eliminar) Instituciones', InstitucionesEstadoScreen()),
                       // SizedBox(height: 16),
                       // _buildButton(context, '(eliminar) crear clave', CrearClaveIngresoScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, '(eliminar) crear clave', IdentificacionDuenoScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, '(eliminar) crear ASDC', IdentificacionCompradorScreen()),
                       SizedBox(height: 30),
                       _buildTextButton(context, 'TÉRMINOS Y CONDICIONES'),
                       SizedBox(height: 8),

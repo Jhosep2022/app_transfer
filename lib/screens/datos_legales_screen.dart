@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/home_screen.dart';
 
+import 'identificacion_dueno_screen.dart';
+
 class DatosLegalesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -153,7 +155,7 @@ class DatosLegalesScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
+                            MaterialPageRoute(builder: (context) => IdentificacionDuenoScreen()),
                           );
                         },
                         child: Text(
