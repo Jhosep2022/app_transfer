@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/datos_legales_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ImpuestoMunicipalScreen extends StatefulWidget {
   @override
@@ -39,6 +40,12 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
         _impuestoResult = 0.0;
       });
     }
+  }
+
+  Future<void> saveData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('impuesto', _impuestoResult.toString());
+    await prefs.setString('valor_base', _valorBase.toString());
   }
 
   @override
@@ -167,7 +174,8 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          await saveData();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => DatosLegalesScreen()),

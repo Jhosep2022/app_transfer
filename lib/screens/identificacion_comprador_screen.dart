@@ -1,6 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transfer_app/screens/home_screen.dart';
 
-class IdentificacionCompradorScreen extends StatelessWidget {
+class IdentificacionCompradorScreen extends StatefulWidget {
+  @override
+  _IdentificacionCompradorScreenState createState() => _IdentificacionCompradorScreenState();
+}
+
+class _IdentificacionCompradorScreenState extends State<IdentificacionCompradorScreen> {
+  String rut = '';
+  String apellidoPaterno = '';
+  String apellidoMaterno = '';
+  String nombres = '';
+  String telefono = '';
+  String direccion = '';
+  String razonSocial = '';
+  String giro = '';
+
+  String vin = '';
+  String nroMotor = '';
+  String idChasis = '';
+  String tipo = '';
+  String anio = '';
+  String marca = '';
+  String modelo = '';
+  String color = '';
+
+  String ciudad = '';
+  String comuna = '';
+
+  String correo = '';
+  String patente = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSharedPreferences();
+  }
+
+  Future<void> _loadSharedPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //Datos comprador
+      apellidoPaterno= prefs.getString('apellidoPaterno') ?? 'No disponible';
+      apellidoMaterno = prefs.getString('apellidoMaterno') ?? 'No disponible';
+      nombres = prefs.getString('nombres') ?? 'No disponible';
+      telefono = prefs.getString('telefono') ?? 'No disponible';
+      direccion = prefs.getString('direccion') ?? 'No disponible';
+      razonSocial = prefs.getString('razonSocial') ?? 'No disponible';
+      giro = prefs.getString('giro') ?? 'No disponible';
+      correo =prefs.getString('correo_usuario') ?? 'No disponible';
+
+      //Datos vehiculo
+      vin = prefs.getString('vin') ?? 'No disponible';
+      nroMotor = prefs.getString('nro_motor') ?? 'No disponible';
+      idChasis = prefs.getString('chasis') ?? 'No disponible';
+      tipo = prefs.getString('tipo_automovil') ?? 'No disponible';
+      anio = prefs.getString('anio_automovil') ?? 'No disponible';
+      marca = prefs.getString('marca_automovil') ?? 'No disponible';
+      modelo = prefs.getString('modelo') ?? 'No disponible';
+      color = prefs.getString('color') ?? 'No disponible';
+      patente = prefs.getString('patente_compra') ?? 'No disponible';
+
+      //region
+      ciudad = prefs.getString('ciudad') ?? 'No disponible';
+      comuna = prefs.getString('comuna') ?? 'No disponible';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,33 +88,33 @@ class IdentificacionCompradorScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '77662706-2',
+                      rut, // Mostrar el RUT obtenido de SharedPreferences
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
                       ),
                     ),
                     SizedBox(height: 8),
-                    Text('CERTIFICACION VIRTUAL DE IDENTIFICACION PERSONAL SPA'),
-                    Text('ARTURO PRAT 831 SAN CARLOS'),
+                    Text(razonSocial),
+                    Text(direccion),
                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Chillán'),
-                        Text('San Carlos'),
+                        Text(ciudad),
+                        Text(comuna),
                       ],
                     ),
                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('miguelfuicaj@gmail.com'),
-                        Text('56'),
+                        Text(correo),
+                        Text(telefono),
                       ],
                     ),
                     SizedBox(height: 8),
-                    Text('gh'),
+                    Text(giro),
                   ],
                 ),
               ),
@@ -64,7 +131,7 @@ class IdentificacionCompradorScreen extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'ZZZZ66-6',
+                          patente,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.teal,
@@ -73,20 +140,25 @@ class IdentificacionCompradorScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 8),
-                    _buildKeyValueRow('VIN', 'VIN'),
-                    _buildKeyValueRow('NRO MOTOR', 'NROMOTOR'),
-                    _buildKeyValueRow('ID CHASIS', 'CHASIS'),
-                    _buildKeyValueRow('Tipo', 'AUTOMOVIL'),
-                    _buildKeyValueRow('Año', '2018'),
-                    _buildKeyValueRow('Marca', 'PEUGEOT'),
-                    _buildKeyValueRow('Modelo', '308 BLUE HDI HB 1.6 AUT'),
-                    _buildKeyValueRow('Color', 'COLOR'),
+                    _buildKeyValueRow('VIN', vin),
+                    _buildKeyValueRow('NRO MOTOR', nroMotor),
+                    _buildKeyValueRow('ID CHASIS', idChasis),
+                    _buildKeyValueRow('Tipo', tipo),
+                    _buildKeyValueRow('Año', anio),
+                    _buildKeyValueRow('Marca', marca),
+                    _buildKeyValueRow('Modelo', modelo),
+                    _buildKeyValueRow('Color', color),
                   ],
                 ),
               ),
               SizedBox(height: 32),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),

@@ -59,6 +59,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
     await prefs.setString('marca_automovil', marcaCivil ?? '');
     await prefs.setString('modelo', modeloCivil ?? '');
     await prefs.setString('color', colorCivil ?? '');
+    await prefs.setString('patente_venta', _ppuController.text);
   }
 
   @override

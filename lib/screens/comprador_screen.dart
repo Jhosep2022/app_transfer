@@ -55,6 +55,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
     await prefs.setString('marca_automovil', marcaCivil);
     await prefs.setString('modelo', modeloCivil);
     await prefs.setString('color', colorCivil);
+    await prefs.setString('patente_compra', _ppuController.text);
   }
 
   Future<void> _cargarDatosPref() async {
