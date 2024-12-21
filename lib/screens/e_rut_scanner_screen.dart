@@ -190,11 +190,12 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
     await secureStorage.write(key: 'razonSocial', value: razonSocial);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('rut', rutScanned);
-    await prefs.setString('serial', serie);
-    await prefs.setString('tipo', "2");
-    await prefs.setString('direccion', direccion);
-    await prefs.setString('razonSocial', razonSocial);
+    await prefs.setString('rut', rutScanned ?? "No disponible");
+    await prefs.setString('rutRepre', rutScanned ?? "No disponible");
+    await prefs.setString('serie', serie ?? "No disponible");
+    await prefs.setString('tipo', "2" ?? "No disponible");
+    await prefs.setString('direccion', direccion ?? "No disponible");
+    await prefs.setString('razonSocial', razonSocial ?? "No disponible");
     await prefs.setString('contador', "4");
     await prefs.setString('monedavende', r"$");
     await prefs.setString('vendeenviadatos', "");
