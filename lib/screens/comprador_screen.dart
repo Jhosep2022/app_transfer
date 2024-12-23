@@ -55,7 +55,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
     await prefs.setString('marca_automovil', marcaCivil);
     await prefs.setString('modelo', modeloCivil);
     await prefs.setString('color', colorCivil);
-    await prefs.setString('patente_compra', _ppuController.text);
+    await prefs.setString('patente_compra', _ppuController.value.text);
   }
 
   Future<void> _cargarDatosPref() async {
@@ -396,7 +396,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
   Widget _buildContinueButton() {
     return ElevatedButton(
       onPressed: () async {
-        if(_selectedRegion != regionLocal){
+        if(_selectedRegion != "Región de $regionLocal"){
           buildDialog(context, 'Región Incorrecta', 'La región seleccionada no coincide con la región de su residencia. Por favor, verifique los datos ingresados.');
         }
         if(robadoAutomovil == "Sí"){

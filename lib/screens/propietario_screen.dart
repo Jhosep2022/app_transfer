@@ -476,9 +476,8 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
               MaterialPageRoute(builder: (context) => ImpuestoMunicipalScreen()),
             );
           }else{
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PlacaDenegadaScreen()),
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('El vehículo no está en venta')),
             );
           }
         }

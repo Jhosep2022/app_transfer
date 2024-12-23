@@ -61,7 +61,7 @@ class _IdentificacionDuenoScreenState extends State<IdentificacionDuenoScreen> {
       marca = prefs.getString('marca_automovil') ?? 'No disponible';
       modelo = prefs.getString('modelo') ?? 'No disponible';
       color = prefs.getString('color') ?? 'No disponible';
-      patente = prefs.getString('patente_compra') ?? 'No disponible';
+      patente = prefs.getString('patente_venta') ?? 'No disponible';
       impuesto = prefs.getString('impuesto') ?? 'No disponible';
       valorBase = prefs.getString('valor_base') ?? 'No disponible';
 
@@ -151,8 +151,8 @@ class _IdentificacionDuenoScreenState extends State<IdentificacionDuenoScreen> {
                     _buildKeyValueRow('Marca', marca),
                     _buildKeyValueRow('Modelo', modelo),
                     _buildKeyValueRow('Color', color),
-                    _buildKeyValueRow('Precio Base', valorBase),
-                    _buildKeyValueRow('Impuesto', impuesto),
+                    _buildKeyValueRow('Precio Base \$', valorBase),
+                    _buildKeyValueRow('Impuesto \$', impuesto),
                   ],
                 ),
               ),

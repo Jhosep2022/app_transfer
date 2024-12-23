@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final LocationService _locationService = LocationService();
   late StreamSubscription<bool> _locationSubscription;
 
-  Future<void> _cargarCorreoUsuario() async {
+  Future<void> _cargarAliasUsuario() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       alias = prefs.getString('alias') ?? "No disponible";
@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _cargarAliasUsuario();
     _locationSubscription =
         _locationService.locationStream.listen((isLocationEnabled) {
       if (!isLocationEnabled) {
