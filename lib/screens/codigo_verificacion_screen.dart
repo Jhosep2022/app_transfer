@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:transfer_app/screens/home_screen.dart';
 import 'package:transfer_app/services/clave_remota_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CodigoVerificacionScreen extends StatelessWidget {
   final String email;
@@ -14,6 +15,12 @@ class CodigoVerificacionScreen extends StatelessWidget {
     required this.rut,
     required this.clave,
   });
+
+  Future<void> _saveToLocalStorage() async {
+    // Guardar los datos en SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('inicio_sesion', "iniciado");
+  }
 
   Future<void> _guardarClaveRemota(BuildContext context, String v) async {
     print("Guardando clave remota...");
@@ -28,6 +35,7 @@ class CodigoVerificacionScreen extends StatelessWidget {
     try {
       await _usuarioService.actualizarClaveRemota(rut, clave);      
       // Navega a la nueva pantalla después de confirmar el código
+      _saveToLocalStorage();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),

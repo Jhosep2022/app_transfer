@@ -20,6 +20,7 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
   String tipo = "";
   String latitud = "";
   String longitud = "";
+  String sesion = "";
 
   // Método para cargar datos desde SharedPreferences
   Future<void> _cargarDatosSharedPreferences() async {
@@ -31,7 +32,15 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
       tipo = prefs.getString('tipo') ?? "";
       latitud = prefs.getString('latitud') ?? "";
       longitud = prefs.getString('longitud') ?? "";
+      sesion = prefs.getString('inicio_sesion') ?? "cerrado";
     });
+  }
+
+  Future<void> _saveToLatLong(double longitud, double latitud ) async {
+    // Guardar los datos en SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('longitud', longitud.toString());
+    await prefs.setString('latitud', latitud.toString());
   }
 
   bool _isLoading = true;
@@ -84,20 +93,21 @@ class _UbicacionScreenState extends State<UbicacionScreen> {
       _locationMessage = "Ubicación actual:\nLatitud: ${position.latitude}\nLongitud: ${position.longitude}";
       _isLoading = false;
       _moveToCurrentLocation();
+      _saveToLatLong(position.longitude, position.latitude);
     });
 
     // Espera de 2 segundos antes de redirigir
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted && _isMapRendered) {
-        if(rut == "" || rut == "No disponible"){
+        if(sesion == "iniciado"){
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
+            MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         }else{
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => TransferenciaPPUScreen()),
           );
         }
       }
