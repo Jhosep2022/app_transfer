@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             onPressed: () async {
                                               SharedPreferences prefs =
                                                   await SharedPreferences.getInstance();
-                                              await prefs.setString('rut', "No disponible");
+                                              await prefs.setString('inicio_sesion', "cerrado");
                                               Navigator.of(context).pop();
                                               Navigator.push(
                                                 context,
