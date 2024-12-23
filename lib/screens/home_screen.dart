@@ -21,8 +21,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String alias = ""; // Variable para almacenar el alias
   final LocationService _locationService = LocationService();
   late StreamSubscription<bool> _locationSubscription;
+
+  Future<void> _cargarCorreoUsuario() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      alias = prefs.getString('alias') ?? "No disponible";
+    });
+  }
 
   @override
   void initState() {
@@ -37,10 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Timer(Duration(seconds: 5), () async {
       bool hasInternet = await _checkInternetConnection();
       if (hasInternet) {
-        // Si hay conexión a internet, navega a la siguiente pantalla
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => UbicacionScreen()),
-        );
       } else {
         // Si no hay conexión, muestra un alert
         _showNoInternetDialog();
@@ -175,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            'Hola Andre,',
+                            'Hola $alias',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,

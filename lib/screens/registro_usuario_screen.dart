@@ -97,6 +97,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
     await prefs.setString('ciudad', widget.ciudad ?? "No disponible");
     await prefs.setString('comuna', widget.comuna ?? "No disponible");
     await prefs.setString('clave_local', _claveController.text ?? "No disponible");
+    await prefs.setString('alias', _aliasController.text ?? "No disponible");
   }
 
 
