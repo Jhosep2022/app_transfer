@@ -1,11 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/propietario_screen.dart';
 import 'package:pin_code_fields/pin_code_fields.dart'; 
 
 class ClaveScreen extends StatelessWidget {
+  Future<String?> _obtenerClaveLocal() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('clave_local'); // Obtener la clave almacenada
+  }
+
+  void _verificarClave(BuildContext context, String claveIngresada) async {
+    String? claveLocal = await _obtenerClaveLocal();
+    if (claveLocal == null) {
+      _mostrarDialogo(context, 'Error', 'No hay clave configurada en la aplicación.');
+    } else if (claveIngresada == claveLocal) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PropietarioScreen()),
+      );
+    } else {
+      _mostrarDialogo(context, 'Clave incorrecta', 'La clave ingresada no coincide.');
+    }
+  }
+
+  void _mostrarDialogo(BuildContext context, String titulo, String mensaje) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(titulo),
+        content: Text(mensaje),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Aceptar'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    String claveIngresada = ""; // Variable para almacenar la clave ingresada
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -89,22 +127,19 @@ class ClaveScreen extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       enableActiveFill: true,
                       onCompleted: (v) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PropietarioScreen()),
-                        );
+                        claveIngresada = v; // Almacena la clave ingresada
+                        _verificarClave(context, claveIngresada); // Verifica la clave ingresada
                       },
                       onChanged: (value) {
-                        print(value);
+                        claveIngresada = value; // Actualiza la clave conforme se escribe
                       },
                     ),
                   ),
 
-
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      // Esto es opcional, si quisieras que también haya un botón para continuar
+                      _verificarClave(context, claveIngresada); // Verifica la clave al presionar el botón
                     },
                     child: Text(
                       'Continuar',
