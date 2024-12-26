@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.arrow_back, color: Colors.white),
+                              
                               GestureDetector(
                                 onTap: () {
                                   showDialog(
