@@ -10,7 +10,8 @@ import 'package:transfer_app/screens/splash_screen.dart';
 import 'package:transfer_app/screens/transferencia_ppu_screen.dart';
 import 'package:transfer_app/screens/verificar_ppu_screen.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'dart:io';
+import 'package:flutter/services.dart';
 import '../services/location_service.dart';
 import 'mi_ubicacion_home_screen.dart';
 import 'ubicacion_screen.dart'; // Pantalla de destino para Ubicación
@@ -157,16 +158,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           TextButton(
                                             child: Text('Aceptar'),
                                             onPressed: () async {
-                                              SharedPreferences prefs =
-                                                  await SharedPreferences.getInstance();
-                                              await prefs.setString('inicio_sesion', "cerrado");
-                                              Navigator.of(context).pop();
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TransferenciaPPUScreen()),
-                                              );
+                                              if (Platform.isAndroid) {
+                                                // Cierra la aplicación en Android
+                                                SystemNavigator.pop();
+                                              } else if (Platform.isIOS) {
+                                                // Cierra la aplicación en iOS
+                                                exit(0);
+                                              } else {
+                                                // Maneja otros casos (web, etc.)
+                                                print('Cerrar aplicación no es compatible en esta plataforma.');
+                                              }
                                             },
                                           ),
                                         ],

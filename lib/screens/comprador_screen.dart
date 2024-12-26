@@ -360,7 +360,8 @@ class _CompradorScreenState extends State<CompradorScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Tipo:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                Text(tipo, style: TextStyle(fontSize: 16)),
+                Text((tipo == "" || tipo == "No disponible" || tipo == "No encontrado") ? tipoCivil : tipo, 
+                style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 8),
@@ -368,7 +369,8 @@ class _CompradorScreenState extends State<CompradorScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Año:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                Text(anio, style: TextStyle(fontSize: 16)),
+                Text((anio == "" || anio == "No disponible" || anio == "Sin año") ? anuCivil : anio, 
+                style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 8),
@@ -376,7 +378,8 @@ class _CompradorScreenState extends State<CompradorScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Marca:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                Text(marca, style: TextStyle(fontSize: 16)),
+                Text((marca == "" || marca == "No disponible" || marca == "Sin marca") ? marcaCivil : marca, 
+                style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 8),
@@ -384,7 +387,8 @@ class _CompradorScreenState extends State<CompradorScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Modelo:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                Text(modelo, style: TextStyle(fontSize: 16)),
+                Text((modelo == "" || modelo == "No disponible" || modelo == "Sin Modelo") ? modeloCivil : modelo, 
+                style: TextStyle(fontSize: 16)),
               ],
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:transfer_app/screens/alert_crear_eli_pass_screen.dart';
 import 'crear_clave_eli_pass_screen.dart';
 import 'confirmar_correo_screen.dart';
 
@@ -144,7 +145,13 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                               content: Text("Las claves no coinciden. Serás redirigido para crear la clave nuevamente."),
                               actions: [
                                 TextButton(
-                                  onPressed: () => Navigator.pop(context),
+                                  onPressed: () => {
+                                    Navigator.pop(context),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => CrearEliPassScreen()),
+                                    )
+                                  },
                                   child: Text("OK"),
                                 ),
                               ],
