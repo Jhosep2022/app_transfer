@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(height: 20.h),
                 Lottie.asset(
                   'assets/stationwagon.json',
-                  width: 250.w,
+                  width: 200.w,
                   height: 200.h,
                   fit: BoxFit.contain,
                 ),
