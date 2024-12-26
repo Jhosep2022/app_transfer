@@ -272,7 +272,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       SizedBox(height: 20.h),
                       // Subtítulo en rojo para el primer grupo de preguntas
                       Text(
-                        'Tipo: ${tipoAutomovil ?? ''}',
+                        'Tipo: ${(tipoAutomovil == "" || tipoAutomovil == "No disponible" || tipoAutomovil == "No encontrado") ? tipoCivil : tipoAutomovil}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
@@ -281,7 +281,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       ),
                       // Subtítulo en rojo para el primer grupo de preguntas
                       Text(
-                        'Año: ${anoAutomovil ?? ''}',
+                        'Año: ${(anoAutomovil == "" || anoAutomovil == "No disponible" || anoAutomovil == "Sin año") ? anuCivil : anoAutomovil}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
@@ -290,7 +290,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       ),
                       // Subtítulo en rojo para el primer grupo de preguntas
                       Text(
-                        'Marca: ${marcaAutomovil ?? ''}',
+                        'Marca: ${(marcaAutomovil == "" || marcaAutomovil == "No disponible" || marcaAutomovil == "Sin marca") ? marcaCivil : marcaAutomovil}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
@@ -299,7 +299,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                       ),
                       // Subtítulo en rojo para el primer grupo de preguntas
                       Text(
-                        'Modelo: ${modeloAutomovil ?? ''}',
+                        'Modelo: ${(modeloAutomovil == "" || modeloAutomovil == "No disponible" || modeloAutomovil == "Sin modelo") ? modeloCivil : modeloAutomovil}',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
