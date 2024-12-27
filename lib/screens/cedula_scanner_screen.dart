@@ -147,7 +147,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('rut', run ?? "No disponible");
     await prefs.setString('serie', serial ?? "No disponible");
-    await prefs.setString('tipo', tipo ?? "No disponible");
+    await prefs.setString('tipo', "1");
 
     // Mostrar el diálogo con los datos
     showDialog(
@@ -160,7 +160,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
             children: [
               Text('RUN: ${run ?? "No disponible"}'),
               Text('Serial: ${serial ?? "No disponible"}'),
-              Text('Tipo: ${tipo ?? "No disponible"}'),
+              const Text('Tipo: 1'),
             ],
           ),
           actions: [

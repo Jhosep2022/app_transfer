@@ -251,7 +251,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
                               final vehiculo = await vehiculosService.consultarRegistroInterno(patente);
                               final consultaVechiculo = await vehiculosService.consultarRegistroCivil(patente);
                               
-                              if (vehiculo != null && consultaVechiculo != null) {
+                              if (vehiculo != null) {
                                 // Imprimir la respuesta en consola
                                 setState(() {
                                   tipo = vehiculo.tipo;
@@ -262,20 +262,6 @@ class _CompradorScreenState extends State<CompradorScreen> {
                                   robadoAutomovil = vehiculo.estadoRobo;
                                   perdidoAutomovil = vehiculo.estadoPerdida;
                                   region = vehiculo.region;
-                                
-                                  patenteCivil = consultaVechiculo.patenteCivil;
-                                  digitoCivil = consultaVechiculo.digitoCivil;
-                                  nombreCivil = consultaVechiculo.nombreCivil;
-                                  vinCivil = consultaVechiculo.vinCivil;
-                                  chasisCivil = consultaVechiculo.chasisCivil;
-                                  serieCivil = consultaVechiculo.serieCivil;
-                                  motorCivil = consultaVechiculo.motorCivil;
-                                  rutCivil = consultaVechiculo.rutCivil;
-                                  tipoCivil = consultaVechiculo.tipoCivil;
-                                  anuCivil = consultaVechiculo.anuCivil;
-                                  marcaCivil = consultaVechiculo.marcaCivil;
-                                  modeloCivil = consultaVechiculo.modeloCivil;
-                                  colorCivil = consultaVechiculo.colorCivil;
                                 });
                                 print('Vehículo encontrado: ${vehiculo.toJson()}');
 
@@ -294,7 +280,39 @@ class _CompradorScreenState extends State<CompradorScreen> {
                                   robadoAutomovil = "Sin información";
                                   perdidoAutomovil = "Sin información";
                                   region = "Sin región";
+                                });
+                                print('No se encontró información para la patente ingresada en la base interna.');
 
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('No se encontró información para la patente ingresada en la base interna.')),
+                                );
+                              }
+                              
+                              if (consultaVechiculo != null) {
+                                // Imprimir la respuesta en consola
+                                setState(() {                                
+                                  patenteCivil = consultaVechiculo.patenteCivil;
+                                  digitoCivil = consultaVechiculo.digitoCivil;
+                                  nombreCivil = consultaVechiculo.nombreCivil;
+                                  vinCivil = consultaVechiculo.vinCivil;
+                                  chasisCivil = consultaVechiculo.chasisCivil;
+                                  serieCivil = consultaVechiculo.serieCivil;
+                                  motorCivil = consultaVechiculo.motorCivil;
+                                  rutCivil = consultaVechiculo.rutCivil;
+                                  tipoCivil = consultaVechiculo.tipoCivil;
+                                  anuCivil = consultaVechiculo.anuCivil;
+                                  marcaCivil = consultaVechiculo.marcaCivil;
+                                  modeloCivil = consultaVechiculo.modeloCivil;
+                                  colorCivil = consultaVechiculo.colorCivil;
+                                });
+
+                                // Opcional: mostrar los datos en pantalla
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Vehículo encontrado')),
+                                );
+                              } else {
+                                // Si no se encuentra el vehículo
+                                setState(() {
                                   patenteCivil = "Sin patente";
                                   digitoCivil = "Sin dígito";
                                   nombreCivil = "Sin nombre";
@@ -304,15 +322,15 @@ class _CompradorScreenState extends State<CompradorScreen> {
                                   rutCivil = "Sin rut";
                                   motorCivil = "Sin motor";
                                   tipoCivil = "Sin tipo";
-                                  anuCivil = "Sin año";
+                                  anuCivil = "Sin año xd";
                                   marcaCivil = "Sin marca";
                                   modeloCivil = "Sin modelo";
                                   colorCivil = "Sin color";
                                 });
-                                print('No se encontró información para la patente ingresada.');
+                                print('No se encontró información para la patente ingresada en la base externa.');
 
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('No se encontró información para la patente ingresada.')),
+                                  SnackBar(content: Text('No se encontró información para la patente ingresada en la base externa.')),
                                 );
                               }
           },
