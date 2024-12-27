@@ -146,14 +146,6 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
       return;
     }
 
-    // Validar que _rutController coincide con rut
-    if (_rutController.text != serial) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("El serial ingresado no coincides. $serial - ${_rutController.text}")),
-      );
-      return;
-    }
-
     // Validar términos y condiciones
     if (!_acceptPrivacyPolicy || !_acceptTermsConditions) {
       ScaffoldMessenger.of(context).showSnackBar(
