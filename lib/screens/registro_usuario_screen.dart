@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Para manejar fechas y horas
 import 'package:transfer_app/components/inverted_header_clipper.dart';
+import 'package:transfer_app/screens/politica_privacidad_screen.dart';
+import 'package:transfer_app/screens/terminos_condiciones_screen.dart';
 import 'package:transfer_app/services/cliente_service.dart';
 import 'alert_crear_eli_pass_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -367,7 +369,23 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
                         },
                         activeColor: Colors.teal,
                       ),
-                      Text("Acepto Política de Privacidad"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PoliticaPrivacidadScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Acepto Política de Privacidad",
+                          style: TextStyle(
+                            color: Colors.teal,
+                            decoration: TextDecoration.underline, // Subrayado para indicar clic
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Row(
@@ -381,7 +399,23 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
                         },
                         activeColor: Colors.teal,
                       ),
-                      Text("Acepto Términos y Condiciones"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TerminosCondicionesScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Acepto Política de Privacidad",
+                          style: TextStyle(
+                            color: Colors.teal,
+                            decoration: TextDecoration.underline, // Subrayado para indicar clic
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: 20),
