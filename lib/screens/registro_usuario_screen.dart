@@ -34,6 +34,7 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
   final TextEditingController _aliasController = TextEditingController();
 
   bool _isPasswordVisible = false;
+  bool _isSerialVisible = false;
   bool _acceptPrivacyPolicy = false;
   bool _acceptTermsConditions = false;
 
@@ -206,14 +207,6 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
       return;
     }
 
-    // Validar que _rutController coincide con rut
-    if (_rutController.text != serial) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("El RUT ingresado no coincide. $serial - ${_rutController.text}")),
-      );
-      return;
-    }
-
     // Validar términos y condiciones
     if (!_acceptPrivacyPolicy || !_acceptTermsConditions) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -320,8 +313,17 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
                   Row(
                     children: [
                       Expanded(
-                          child: _buildTextField(
-                              controller: _rutController, labelText: "Nro Documento Serial/...")),
+                        child: _buildPasswordTextField(
+                          "Nro Documento Serial",
+                          _isSerialVisible,
+                          () {
+                            setState(() {
+                              _isSerialVisible = !_isSerialVisible;
+                            });
+                          },
+                          _rutController,
+                        ),
+                      ),
                       SizedBox(width: 16),
                       Expanded(
                         child: _buildPasswordTextField(
@@ -341,8 +343,18 @@ class _RegistroUsuarioScreenState extends State<RegistroUsuarioScreen> {
                   Row(
                     children: [
                       Expanded(
-                          child: _buildTextField(
-                              controller: _correoController, labelText: "Correo electrónico")),
+                        child: TextField(
+                          controller: _correoController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: "Correo electrónico",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          ),
+                        ),
+                      ),
                       SizedBox(width: 16),
                       Expanded(
                           child: _buildTextField(

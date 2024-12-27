@@ -83,9 +83,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
                     style: TextStyle(fontSize: 16),
                   ),
                 const SizedBox(height: 20),
-                Text('RUN: ${runEscaneado ?? "No disponible"}'),
-                Text('Serial: ${serialEscaneado ?? "No disponible"}'),
-                Text('Tipo: ${tipoEscaneado ?? "No disponible"}'),
+                
               ],
             ),
           ),
@@ -117,7 +115,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
   }
 
   /// Procesa el contenido del QR para extraer datos clave
-  void _procesarQR(String qrData) {
+  void _procesarQR(String qrData) async {
     try {
       final uri = Uri.parse(qrData);
 
@@ -133,73 +131,25 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
       print("Serial: $serialEscaneado");
       print("Tipo: $tipoEscaneado");
 
-      // Mostrar un diálogo con los valores extraídos
-      _mostrarDialogoDatos(runEscaneado, serialEscaneado, tipoEscaneado);
+      // Guardar los datos en SharedPreferences
+      await _guardarDatos(runEscaneado, serialEscaneado, tipoEscaneado);
+
+      // Navegar a la siguiente pantalla
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
+      );
     } catch (e) {
       print("Error al procesar QR: $e");
-      _mostrarDialogoError();
     }
   }
 
-  /// Muestra un diálogo con los datos extraídos del QR
-  void _mostrarDialogoDatos(String? run, String? serial, String? tipo) async {
-    // Guardar los datos en SharedPreferences
+  /// Guarda los datos escaneados en SharedPreferences
+  Future<void> _guardarDatos(String? run, String? serial, String? tipo) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('rut', run ?? "No disponible");
     await prefs.setString('serie', serial ?? "No disponible");
-    await prefs.setString('tipo', "1");
-
-    // Mostrar el diálogo con los datos
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Datos Escaneados'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('RUN: ${run ?? "No disponible"}'),
-              Text('Serial: ${serial ?? "No disponible"}'),
-              const Text('Tipo: 1'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => CrearClaveIngresoScreen()),
-                );
-              },
-              child: const Text('Continuar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
-  /// Muestra un diálogo de error si falla el procesamiento del QR
-  void _mostrarDialogoError() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: const Text('No se pudo procesar el QR.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cerrar'),
-            ),
-          ],
-        );
-      },
-    );
+    await prefs.setString('tipo', tipo ?? "No disponible");
   }
 
   /// Valida el RUT llamando al servicio
