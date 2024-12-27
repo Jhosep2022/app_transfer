@@ -58,7 +58,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(360, 690),
       builder: (context, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -73,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(height: 20.h),
                 Lottie.asset(
                   'assets/stationwagon.json',
-                  width: 200.w,
+                  width: 300.w,
                   height: 200.h,
                   fit: BoxFit.contain,
                 ),
