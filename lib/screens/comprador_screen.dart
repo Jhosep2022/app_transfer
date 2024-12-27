@@ -308,7 +308,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
 
                                 // Opcional: mostrar los datos en pantalla
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Vehículo encontrado')),
+                                  SnackBar(content: Text('Vehículo encontrado Base externa.')),
                                 );
                               } else {
                                 // Si no se encuentra el vehículo
