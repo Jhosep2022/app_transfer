@@ -42,7 +42,7 @@ class InstitucionesEstadoScreen extends StatelessWidget {
                             'INSTITUCIONES DEL ESTADO',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -119,7 +119,7 @@ class InstitucionesEstadoScreen extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold, // Negrita
               color: Colors.black, // Texto negro
             ),
@@ -152,7 +152,7 @@ class InstitucionesEstadoScreen extends StatelessWidget {
           child: Text(
             'CONSULTA R.TÉCNICA MINISTERIO TRANSPORTES',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold, // Negrita
               color: Colors.black, // Texto negro
             ),

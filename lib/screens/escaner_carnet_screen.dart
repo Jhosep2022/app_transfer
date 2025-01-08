@@ -48,7 +48,7 @@ class _EscanerCarnetScreenState extends State<EscanerCarnetScreen> {
                           'Escanea tu Carnet',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -74,7 +74,7 @@ class _EscanerCarnetScreenState extends State<EscanerCarnetScreen> {
           // Texto para el código escaneado (opcional)
           Text(
             'Código escaneado: $qrText',
-            style: TextStyle(fontSize: 16, color: Colors.teal),
+            style: TextStyle(fontSize: 14, color: Colors.teal),
           ),
           SizedBox(height: 20),
 
@@ -105,7 +105,7 @@ class _EscanerCarnetScreenState extends State<EscanerCarnetScreen> {
             ),
             child: Text(
               'CONTINUAR AL REGISTRO',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: 20),

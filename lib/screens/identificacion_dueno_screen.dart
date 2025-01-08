@@ -94,7 +94,7 @@ class _IdentificacionDuenoScreenState extends State<IdentificacionDuenoScreen> {
                       rut,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                        fontSize: 18,
                       ),
                     ),
                     SizedBox(height: 8),
@@ -170,7 +170,7 @@ class _IdentificacionDuenoScreenState extends State<IdentificacionDuenoScreen> {
                 ),
                 child: Text(
                   'VOLVER AL PRINCIPIO',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ),
             ],
@@ -195,7 +195,7 @@ class _IdentificacionDuenoScreenState extends State<IdentificacionDuenoScreen> {
             title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: 16,
               decoration: TextDecoration.underline,
             ),
           ),

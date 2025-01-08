@@ -80,7 +80,7 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                   Text(
                     "Repite tu clave Eli Pass",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
@@ -88,7 +88,7 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
                   SizedBox(height: 10),
                   Text(
                     "Ingresa nuevamente la clave de 6 dígitos",
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 40),
@@ -206,7 +206,7 @@ class _RepiteClaveScreenState extends State<RepiteClaveScreen> {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
         ),
       ],

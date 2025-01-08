@@ -72,7 +72,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
                   Text(
                     _resultado,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: _resultado.contains('Verificado') ? Colors.green : Colors.red,
                     ),
@@ -80,7 +80,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
                 if (!_isLoading && _resultado.isEmpty)
                   const Text(
                     'Escanea un código QR para verificar el RUT.',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 14),
                   ),
                 const SizedBox(height: 20),
                 

@@ -19,7 +19,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
             Text(
               "Crea tu clave de ingreso",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.teal,
               ),
@@ -28,7 +28,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               "Te permitirá usar tu App",
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+              style: TextStyle(fontSize: 14, color: Colors.black54),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 40),
@@ -106,7 +106,7 @@ class CrearClaveIngresoScreen extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
         ),
       ],

@@ -65,7 +65,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                                 'NOMBRE R. LEGAL Y DATOS',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22.sp,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -88,7 +88,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                               controller: apellidoPaternoController,
                               decoration: InputDecoration(
                                 labelText: 'Apellido Paterno',
-                                labelStyle: TextStyle(fontSize: 14.sp),
+                                labelStyle: TextStyle(fontSize: 12.sp),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
@@ -101,7 +101,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                               controller: apellidoMaternoController,
                               decoration: InputDecoration(
                                 labelText: 'Apellido Materno',
-                                labelStyle: TextStyle(fontSize: 14.sp),
+                                labelStyle: TextStyle(fontSize: 12.sp),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
@@ -118,7 +118,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                               controller: nombresController,
                               decoration: InputDecoration(
                                 labelText: 'Nombres',
-                                labelStyle: TextStyle(fontSize: 14.sp),
+                                labelStyle: TextStyle(fontSize: 12.sp),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
@@ -131,7 +131,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                               controller: telefonoController,
                               decoration: InputDecoration(
                                 labelText: 'Teléfono',
-                                labelStyle: TextStyle(fontSize: 14.sp),
+                                labelStyle: TextStyle(fontSize: 12.sp),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
@@ -146,7 +146,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                         controller: direccionController,
                         decoration: InputDecoration(
                           labelText: 'Dirección',
-                          labelStyle: TextStyle(fontSize: 14.sp),
+                          labelStyle: TextStyle(fontSize: 12.sp),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                           ),
@@ -157,7 +157,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                         controller: razonSocialController,
                         decoration: InputDecoration(
                           labelText: 'Razón Social',
-                          labelStyle: TextStyle(fontSize: 14.sp),
+                          labelStyle: TextStyle(fontSize: 12.sp),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                           ),
@@ -168,7 +168,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                         controller: giroController,
                         decoration: InputDecoration(
                           labelText: 'Giro',
-                          labelStyle: TextStyle(fontSize: 14.sp),
+                          labelStyle: TextStyle(fontSize: 12.sp),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                           ),
@@ -188,7 +188,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 12.sp,
+                            fontSize: 10.sp,
                           ),
                         ),
                         style: ElevatedButton.styleFrom(

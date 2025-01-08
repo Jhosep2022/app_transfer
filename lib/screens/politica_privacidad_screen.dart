@@ -47,7 +47,7 @@ class _PoliticaPrivacidadScreenState extends State<PoliticaPrivacidadScreen> {
                           'POLÍTICA DE PRIVACIDAD',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

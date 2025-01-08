@@ -66,7 +66,7 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
                           'TU UBICACIÓN GEOGRÁFICA',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -88,7 +88,7 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
               children: [
                 Text("Región *",
                     style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 DropdownButtonFormField<String>(
                   isExpanded: true, // Permitir expansión
@@ -118,7 +118,7 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
                 SizedBox(height: 20),
                 Text("Comuna *",
                     style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 DropdownButtonFormField<String>(
                   isExpanded: true, // Permitir expansión
@@ -229,7 +229,7 @@ class _SeleccionUbicacionScreenState extends State<SeleccionUbicacionScreen> {
             child: Text(
               'ACEPTAR',
               style: TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
           ),
         ],

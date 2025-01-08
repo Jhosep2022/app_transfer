@@ -81,7 +81,7 @@ class CodigoVerificacionScreen extends StatelessWidget {
                   Text(
                     "Ingresa el Código",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
@@ -91,7 +91,7 @@ class CodigoVerificacionScreen extends StatelessWidget {
                   Text(
                     "que recibiste en tu correo",
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.black54,
                     ),
                     textAlign: TextAlign.center,

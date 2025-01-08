@@ -80,7 +80,7 @@ class ClaveScreen extends StatelessWidget {
                             'CLAVE', 
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -99,7 +99,7 @@ class ClaveScreen extends StatelessWidget {
                   SizedBox(height: 40),
                   Text(
                     'Ingresa tu clave',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.teal),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal),
                   ),
                   SizedBox(height: 20),
 
@@ -143,7 +143,7 @@ class ClaveScreen extends StatelessWidget {
                     },
                     child: Text(
                       'Continuar',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 14, color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,

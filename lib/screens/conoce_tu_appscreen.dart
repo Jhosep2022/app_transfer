@@ -40,7 +40,7 @@ class ConoceTuAppScreen extends StatelessWidget {
                             'FAMILIARIZATE CON TU APP',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -59,32 +59,32 @@ class ConoceTuAppScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     'INTRODUCCIÓN',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'El propósito de esta App es que, tanto "El Propietario(a)" como "El Comprador(a)" puedan Preparar la Transferencia de una PPU (Vehículo) con datos directos de una Institución del Estado.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Esta Preparación es para saber qué información provee respecto de los datos que van en un contrato de compra/venta en una transferencia de un vehículo, sin que, por el momento realicemos la Transferencia propiamente tal.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'El propietario «Administra del Estado de la Placa Patente Única, AEEPU por su sigla en español, es decir, puede manipular (la propia) o/e Informarse de la situación de cada Placa Patente Única (PPU) de vehículos usados de dos o más ruedas.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Nuestra App, permite detectar la duplicación (Clonación) de la Placa Patente Única, basado en que, a un vehículo se le puede instalar cualquier PPU, propio, no necesariamente el Propietario(a), tiene su vehículo en venta en nuestra App, es decir, en venta la PPU.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Para Preparar la Transferencia de un Vehículo, siempre nos referimos a la PPU, porque es lo que les interesa a todos: Servicio del Registro Civil, Propietario(a), Notaría, etc. Además, de evitar fraudes por clonación.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 20),
                   // Botón Volver

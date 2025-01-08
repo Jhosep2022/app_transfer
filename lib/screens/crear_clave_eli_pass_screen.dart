@@ -40,7 +40,7 @@ class CrearClaveScreen extends StatelessWidget {
             Text(
               "Crea tu clave Eli Pass",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -48,7 +48,7 @@ class CrearClaveScreen extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               "La clave debe ser de 6 números\nque sea fácil de recordar",
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+              style: TextStyle(fontSize: 14, color: Colors.black54),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 40),
@@ -125,7 +125,7 @@ class CrearClaveScreen extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
         ),
       ],

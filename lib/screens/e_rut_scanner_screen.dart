@@ -74,7 +74,7 @@ class _ERutScannerScreenState extends State<ERutScannerScreen> with WidgetsBindi
                     child: Text(
                       resultMessage,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: resultMessage.contains('Verificado') ? Colors.green : Colors.red,
                       ),

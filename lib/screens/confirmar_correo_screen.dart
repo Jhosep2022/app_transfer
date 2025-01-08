@@ -122,7 +122,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
                         '¿Es tu correo?',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -148,7 +148,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
               Text(
                 '¿Es tu correo?',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -158,7 +158,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
                 child: Text(
                   'Si confirmas, te enviaremos un código de 6 dígitos',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     color: Colors.black54,
                   ),
                   textAlign: TextAlign.center,
@@ -168,7 +168,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
               Text(
                 email,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.black87,
                   fontWeight: FontWeight.bold,
                 ),
@@ -195,7 +195,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
                 child: Text(
                   'CONFIRMO',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -231,7 +231,7 @@ class ConfirmarCorreoScreen extends StatelessWidget {
                 child: Text(
                   '¿No es tu correo?',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),

@@ -162,7 +162,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
                     'COMPRADOR(A)',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -183,7 +183,7 @@ class _CompradorScreenState extends State<CompradorScreen> {
         value: _selectedRegion,
         hint: Text(
           'Pulsa y Elige región donde estás',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         items: regiones.map((String region) {
           return DropdownMenuItem<String>(
@@ -377,36 +377,36 @@ class _CompradorScreenState extends State<CompradorScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Tipo:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text('Tipo:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 Text((tipo == "" || tipo == "No disponible" || tipo == "No encontrado") ? tipoCivil : tipo, 
-                style: TextStyle(fontSize: 16)),
+                style: TextStyle(fontSize: 14)),
               ],
             ),
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Año:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text('Año:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 Text((anio == "" || anio == "No disponible" || anio == "Sin año") ? anuCivil : anio, 
-                style: TextStyle(fontSize: 16)),
+                style: TextStyle(fontSize: 14)),
               ],
             ),
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Marca:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text('Marca:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 Text((marca == "" || marca == "No disponible" || marca == "Sin marca") ? marcaCivil : marca, 
-                style: TextStyle(fontSize: 16)),
+                style: TextStyle(fontSize: 14)),
               ],
             ),
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Modelo:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text('Modelo:', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 Text((modelo == "" || modelo == "No disponible" || modelo == "Sin Modelo") ? modeloCivil : modelo, 
-                style: TextStyle(fontSize: 16)),
+                style: TextStyle(fontSize: 14)),
               ],
             ),
           ],

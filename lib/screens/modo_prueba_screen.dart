@@ -40,7 +40,7 @@ class ModoPruebaScreen extends StatelessWidget {
                             'APLICACIÓN EN MODO PRUEBA',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -59,22 +59,22 @@ class ModoPruebaScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     'Usa las Placa Patente Única ficticias (ZZZZ??) como se indica más abajo, para que conozcas el resultado que obtendrás cuando utilices la App con una real, tuya, o de un tercero. (Desliza el texto para llegar al final). Después de terminar de leer, sale de la App, bórrala de pantalla y vuelve a entrar.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'No almacenamos datos personales, excepto Rut, correo electrónico y coordenadas geográficas. Es importante destacar que los puedes eliminar con errar varias veces la clave de la App. (Queda lista para volver a instalarla).',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'El propósito de esta App es que, tanto "El Propietario(a)" como "El Comprador(a)" puedan Preparar la Transferencia de una Placa Patente Única (PPU) (Vehículo).',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Preparar una Transferencia, no es sólo conocer los datos que deben ir en un contrato de compra/venta al realizar una Transferencia, sino que también si todos están correctos. El App te mostrará los datos que se encuentran en el Registro de Vehículos Motorizados del Registro Civil.',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   SizedBox(height: 20),
                   // Botón Continuar

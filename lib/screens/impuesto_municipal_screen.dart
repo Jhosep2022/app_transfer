@@ -86,7 +86,7 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                             'Cálculo Impuesto Municipal', 
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -131,7 +131,7 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                   const SizedBox(height: 20),
                   const Text(
                     'Monto base cálculo Imptos.',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   // Muestra el valor que se está usando para calcular el impuesto
@@ -139,7 +139,7 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                     Text(
                       'Valor utilizado para cálculo: \$${_valorBase!.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),
@@ -150,7 +150,7 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                     Text(
                       '1.5% Impuesto a pagar: \$${_impuestoResult!.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.teal,
                       ),

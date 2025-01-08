@@ -48,7 +48,7 @@ class _RepresentanteScannerScreenState extends State<RepresentanteScannerScreen>
               children: [
                 Text(
                   'Código escaneado: $qrText',
-                  style: const TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 if (resultMessage.isNotEmpty)
                   Padding(
@@ -56,7 +56,7 @@ class _RepresentanteScannerScreenState extends State<RepresentanteScannerScreen>
                     child: Text(
                       resultMessage,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: resultMessage.contains('RUT Verificado') ? Colors.green : Colors.red,
                       ),

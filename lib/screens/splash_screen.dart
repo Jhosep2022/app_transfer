@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   'Transfiera su Placa Patente Única con Seguridad',
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     color: Colors.teal,
                   ),
                   textAlign: TextAlign.center,

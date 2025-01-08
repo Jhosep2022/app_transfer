@@ -93,7 +93,7 @@ class VerificarPPUScreen extends StatelessWidget {
                             'Prepara Transferencias',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -112,25 +112,25 @@ class VerificarPPUScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     'NUESTRA EMPRESA',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.teal),
                   ),
                   Text(
                     'Certificación Virtual de Identificación Personal',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                   SizedBox(height: 5),
                   Text(
                     'CertiVip SpA',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                   SizedBox(height: 20),
                   Text(
                     'NUESTRA MISIÓN',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.teal),
                   ),
                   Text(
                     'AYUDAR A EVITAR LA COMPRA DE VEHÍCULOS ROBADOS',
-                    style: TextStyle(fontSize: 14, color: Colors.black),
+                    style: TextStyle(fontSize: 12, color: Colors.black),
                   ),
                   SizedBox(height: 20),
                   // Imágenes de los vehículos
@@ -150,7 +150,7 @@ class VerificarPPUScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     'VERIFIQUE SI LA PPU ESTÁ EN VENTA',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.teal),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.teal),
                   ),
                   SizedBox(height: 10),
                   Container(
@@ -161,13 +161,13 @@ class VerificarPPUScreen extends StatelessWidget {
                     ),
                     child: Text(
                       'AB•CD•12',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
                     '¡¡ Sólo el propietario la puede poner en venta !!',
-                    style: TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 12, color: Colors.red, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20),
                   // Botón Volver

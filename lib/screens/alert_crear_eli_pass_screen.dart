@@ -28,7 +28,7 @@ class CrearEliPassScreen extends StatelessWidget {
                         'Ahora crearás tu Clave Eli Pass',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -54,7 +54,7 @@ class CrearEliPassScreen extends StatelessWidget {
               Text(
                 '¿Clave Eli Pass?',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -64,7 +64,7 @@ class CrearEliPassScreen extends StatelessWidget {
                 child: Text(
                   'Es nuestra forma de proteger tu(s) vehículo(s).',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     color: Colors.black54,
                   ),
                   textAlign: TextAlign.center,
@@ -99,7 +99,7 @@ class CrearEliPassScreen extends StatelessWidget {
                           Text(
                             '¿Cuándo usar Eli Pass?',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.black87,
                             ),
@@ -108,7 +108,7 @@ class CrearEliPassScreen extends StatelessWidget {
                           Text(
                             'Úsala en cualquier equipo y, en cualquier momento que necesites eliminar esta App por internet.',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: Colors.black54,
                             ),
                             textAlign: TextAlign.center,
@@ -146,7 +146,7 @@ class CrearEliPassScreen extends StatelessWidget {
               child: Text(
                 'CONTINUAR',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

@@ -52,7 +52,7 @@ class _RepetirClaveScreenState extends State<RepetirClaveScreen> {
                             'Repita tu clave',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
@@ -133,7 +133,7 @@ class _RepetirClaveScreenState extends State<RepetirClaveScreen> {
           // Mensaje de instrucción
           Text(
             "Si te equivocas, volverás a intentar",
-            style: TextStyle(fontSize: 16, color: Colors.black54),
+            style: TextStyle(fontSize: 14, color: Colors.black54),
             textAlign: TextAlign.center,
           ),
         ],

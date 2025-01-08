@@ -35,7 +35,7 @@ class PlacaDenegadaScreen extends StatelessWidget {
               'ACCESO DENEGADO',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -57,7 +57,7 @@ class PlacaDenegadaScreen extends StatelessWidget {
                 Text(
                   'ENTRE COMO COMPRADOR(A)',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.teal,
                     fontWeight: FontWeight.bold,
                   ),
@@ -65,13 +65,13 @@ class PlacaDenegadaScreen extends StatelessWidget {
                 SizedBox(height: 10),
                 Text(
                   'Esta Placa Patente Única',
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                  style: TextStyle(fontSize: 16, color: Colors.black87),
                 ),
                 SizedBox(height: 10),
                 Text(
                   '¡No le pertenece!',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
@@ -101,7 +101,7 @@ class PlacaDenegadaScreen extends StatelessWidget {
               ),
               child: Text(
                 'CONTINUAR',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
           ),

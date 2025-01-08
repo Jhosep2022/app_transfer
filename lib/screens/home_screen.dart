@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Hola $alias',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Bienvenido !',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Consultas',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: Text(
                           'Ver Mas',
-                          style: TextStyle(color: Colors.teal, fontSize: 14),
+                          style: TextStyle(color: Colors.teal, fontSize: 12),
                         ),
                       ),
                     ],
@@ -316,12 +316,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   'Consultas en instituciones del estado',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 4),
                 Text(
                   'Accede a información y servicios de manera rápida y sencilla.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(fontSize: 10, color: Colors.grey),
                 ),
               ],
             ),

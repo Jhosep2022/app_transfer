@@ -62,7 +62,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
                                 'Preparando',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -70,7 +70,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
                                 'Transferencia de PPU',
                                 style: TextStyle(
                                   color: Colors.white70,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
@@ -86,7 +86,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
                     'Para comenzar escanee QR',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
@@ -133,7 +133,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
         },
         child: Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -158,7 +158,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
         text,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 14,
+          fontSize: 12,
           decoration: TextDecoration.underline,
         ),
       ),

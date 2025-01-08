@@ -91,7 +91,7 @@ class _IdentificacionCompradorScreenState extends State<IdentificacionCompradorS
                       rut, // Mostrar el RUT obtenido de SharedPreferences
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 22,
+                        fontSize: 20,
                       ),
                     ),
                     SizedBox(height: 8),
@@ -165,7 +165,7 @@ class _IdentificacionCompradorScreenState extends State<IdentificacionCompradorS
                 ),
                 child: Text(
                   'VOLVER AL PRINCIPIO',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ),
             ],
@@ -190,7 +190,7 @@ class _IdentificacionCompradorScreenState extends State<IdentificacionCompradorS
             title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontSize: 16,
               decoration: TextDecoration.underline,
             ),
           ),

@@ -109,7 +109,7 @@ class _MiUbicacionHomeScreenState extends State<MiUbicacionHomeScreen> {
                           'UBICACIÓN',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -130,7 +130,7 @@ class _MiUbicacionHomeScreenState extends State<MiUbicacionHomeScreen> {
                         SizedBox(height: 20),
                         Text(
                           _locationMessage,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                       ],

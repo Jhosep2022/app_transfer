@@ -40,7 +40,7 @@ class PlacaDenegadaCompradorScreen extends StatelessWidget {
                             'ENTRE COMO PROPIETARIA(O)',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -66,7 +66,7 @@ class PlacaDenegadaCompradorScreen extends StatelessWidget {
                     'Está a su nombre',
                     style: TextStyle(
                       color: Colors.red,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

@@ -31,7 +31,7 @@ class RepresentanteLegalScreen extends StatelessWidget {
                           'Representante Legal',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -63,7 +63,7 @@ class RepresentanteLegalScreen extends StatelessWidget {
             child: Center(
               child: Text(
               'ESCANEA QR DE TU CÉDULA IDENTIDAD',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
           ),

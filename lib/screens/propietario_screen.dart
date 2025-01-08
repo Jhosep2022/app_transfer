@@ -112,7 +112,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                                 'PROPIETARIO(A)',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 24.sp,
+                                  fontSize: 22.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -138,7 +138,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                               maxLength: 6, // Limita a 6 caracteres
                               decoration: InputDecoration(
                                 labelText: 'P.P.U.',
-                                labelStyle: TextStyle(fontSize: 16.sp),
+                                labelStyle: TextStyle(fontSize: 14.sp),
                                 prefixIcon: Icon(Icons.search, color: Colors.teal, size: 20.sp),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.r),
@@ -289,7 +289,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                               'BUSCAR',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14.sp,
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -303,7 +303,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
                       // Subtítulo en rojo para el primer grupo de preguntas
@@ -312,7 +312,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
                       // Subtítulo en rojo para el primer grupo de preguntas
@@ -321,7 +321,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
                       // Subtítulo en rojo para el primer grupo de preguntas
@@ -330,7 +330,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.normal,
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
 
@@ -341,7 +341,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
                       Divider(thickness: 2.h, color: Colors.grey[300]),
@@ -381,7 +381,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
+                          fontSize: 10.sp,
                         ),
                       ),
                       Divider(thickness: 2.h, color: Colors.grey[300]),
@@ -438,7 +438,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.black54)),
+        Text(label, style: TextStyle(fontSize: 12.sp, color: Colors.black54)),
         Row(
           children: [
             // Radio para "No"
@@ -447,7 +447,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
               groupValue: estadoInicial, // Valor actual del grupo
               onChanged: (val) => onChanged(val!), // Notificar cambios
             ),
-            Text('No', style: TextStyle(fontSize: 14.sp)),
+            Text('No', style: TextStyle(fontSize: 12.sp)),
 
             // Radio para "Sí"
             Radio<bool>(
@@ -455,7 +455,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
               groupValue: estadoInicial, // Valor actual del grupo
               onChanged: (val) => onChanged(val!), // Notificar cambios
             ),
-            Text('Sí', style: TextStyle(fontSize: 14.sp)),
+            Text('Sí', style: TextStyle(fontSize: 12.sp)),
           ],
         ),
       ],
@@ -524,7 +524,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
       label,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 14.sp,
+        fontSize: 12.sp,
         fontWeight: FontWeight.bold,
       ),
     ),
