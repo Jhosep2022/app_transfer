@@ -84,7 +84,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                     ClipPath(
                       clipper: InvertedHeaderClipper(),
                       child: Container(
-                        height: 200.h,
+                        height: 200*0.75.h,
                         width: 375.w,
                         decoration: BoxDecoration(
                           color: Colors.teal,
@@ -92,7 +92,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 16.w,
-                            vertical: 40.h,
+                            vertical: 40*0.75.h,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +107,7 @@ class _PropietarioScreenState extends State<PropietarioScreen> {
                                   Icon(Icons.settings, color: Colors.white),
                                 ],
                               ),
-                              SizedBox(height: 20.h),
+                              SizedBox(height: 20*0.75.h),
                               Text(
                                 'PROPIETARIO(A)',
                                 style: TextStyle(

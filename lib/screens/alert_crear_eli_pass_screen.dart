@@ -15,13 +15,13 @@ class CrearEliPassScreen extends StatelessWidget {
               ClipPath(
                 clipper: InvertedHeaderClipper(),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.23,
+                  height: MediaQuery.of(context).size.height * 0.23*0.75,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.teal,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0*0.75),
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
@@ -39,7 +39,7 @@ class CrearEliPassScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 40*0.75),
 
           // Icono y Texto de Información
           Column(

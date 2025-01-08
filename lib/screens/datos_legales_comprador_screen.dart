@@ -40,13 +40,13 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                     ClipPath(
                       clipper: InvertedHeaderClipper(),
                       child: Container(
-                        height: 200.h,
+                        height: 200*0.75.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.teal,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
+                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40*0.75.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -60,7 +60,7 @@ class DatosLegalesCompradorScreen extends StatelessWidget {
                                   Icon(Icons.settings, color: Colors.white, size: 24.sp),
                                 ],
                               ),
-                              SizedBox(height: 20.h),
+                              SizedBox(height: 20*0.75.h),
                               Text(
                                 'NOMBRE R. LEGAL Y DATOS',
                                 style: TextStyle(

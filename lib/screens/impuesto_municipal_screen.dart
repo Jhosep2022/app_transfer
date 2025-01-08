@@ -61,13 +61,13 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                 ClipPath(
                   clipper: InvertedHeaderClipper(),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    height: MediaQuery.of(context).size.height * 0.23*0.75,
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                       color: Colors.teal,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0*0.75),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -81,7 +81,7 @@ class _ImpuestoMunicipalScreenState extends State<ImpuestoMunicipalScreen> {
                               const Icon(Icons.settings, color: Colors.white),
                             ],
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 20*0.75),
                           const Text(
                             'Cálculo Impuesto Municipal', 
                             style: TextStyle(

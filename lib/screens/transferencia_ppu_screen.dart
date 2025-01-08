@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:transfer_app/components/inverted_header_clipper.dart';
 import 'package:transfer_app/screens/comprador_screen.dart';
 import 'package:transfer_app/screens/crear_clave_ingreso_screen.dart';
+import 'package:transfer_app/screens/datos_legales_comprador_screen.dart';
 import 'package:transfer_app/screens/instituciones_estado_screen.dart';
 import 'package:transfer_app/screens/propietario_screen.dart';
 import 'package:transfer_app/screens/terminos_condiciones_screen.dart';
 import 'package:transfer_app/screens/politica_privacidad_screen.dart';
 import 'package:transfer_app/screens/cedula_scanner_screen.dart'; // Pantalla de escaneo de cédula
 import 'package:transfer_app/screens/e_rut_scanner_screen.dart';
+import 'package:transfer_app/screens/verificar_ppu_screen.dart';
 
 import 'identificacion_comprador_screen.dart';
 import 'identificacion_dueno_screen.dart'; // Pantalla de escaneo de e-rut
@@ -40,13 +42,13 @@ class TransferenciaPPUScreen extends StatelessWidget {
                     ClipPath(
                       clipper: InvertedHeaderClipper(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.23,
+                        height: MediaQuery.of(context).size.height * ((0.23*0.75)),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: Colors.teal,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+                          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0*0.75),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -57,7 +59,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
                                   Icon(Icons.settings, color: Colors.white),
                                 ],
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 20*0.75),
                               Text(
                                 'Preparando',
                                 style: TextStyle(
@@ -99,6 +101,8 @@ class TransferenciaPPUScreen extends StatelessWidget {
                       _buildButton(context, 'CÉDULA IDENTIDAD', CedulaScannerScreen()),
                       SizedBox(height: 16),
                       _buildButton(context, 'E-RUT', ERutScannerScreen()),
+                      SizedBox(height: 16),
+                      _buildButton(context, 'E-RUT', VerificarPPUScreen()),
                       SizedBox(height: 30),
                       _buildTextButton(context, 'TÉRMINOS Y CONDICIONES'),
                       SizedBox(height: 8),

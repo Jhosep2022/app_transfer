@@ -119,6 +119,13 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
     try {
       final uri = Uri.parse(qrData);
 
+      if (uri.queryParameters['RUN'] == "" || uri.queryParameters['serial'] == "" || uri.queryParameters['type'] == "") {
+        setState(() {
+          _resultado = 'Datos del QR incompletos.';
+        });
+        return;
+      }
+
       // Extraer valores de los parámetros de la URL
       setState(() {
         runEscaneado = uri.queryParameters['RUN'];
@@ -141,6 +148,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
       );
     } catch (e) {
       print("Error al procesar QR: $e");
+      _resultado = 'Error al procesar el QR.';
     }
   }
 
@@ -149,7 +157,7 @@ class _CedulaScannerScreenState extends State<CedulaScannerScreen> with WidgetsB
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('rut', run ?? "No disponible");
     await prefs.setString('serie', serial ?? "No disponible");
-    await prefs.setString('tipo', tipo ?? "No disponible");
+    await prefs.setString('tipo', "1");
   }
 
   /// Valida el RUT llamando al servicio
