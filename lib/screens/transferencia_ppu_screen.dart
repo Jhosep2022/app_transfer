@@ -101,8 +101,7 @@ class TransferenciaPPUScreen extends StatelessWidget {
                       _buildButton(context, 'CÉDULA IDENTIDAD', CedulaScannerScreen()),
                       SizedBox(height: 16),
                       _buildButton(context, 'E-RUT', ERutScannerScreen()),
-                      SizedBox(height: 16),
-                      _buildButton(context, 'E-RUT', VerificarPPUScreen()),
+
                       SizedBox(height: 30),
                       _buildTextButton(context, 'TÉRMINOS Y CONDICIONES'),
                       SizedBox(height: 8),
